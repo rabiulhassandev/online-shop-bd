@@ -6,6 +6,73 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', 'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif;
+
+    --color-brand-50:  #f8f8f8;
+    --color-brand-100: #f0f0f0;
+    --color-brand-200: #e4e4e4;
+    --color-brand-300: #d1d1d1;
+    --color-brand-400: #a0a0a0;
+    --color-brand-500: #737373;
+    --color-brand-600: #525252;
+    --color-brand-700: #404040;
+    --color-brand-800: #262626;
+    --color-brand-900: #171717;
+    --color-brand-950: #0a0a0a;
+
+    --color-accent-400: #f59e0b;
+    --color-accent-500: #d97706;
+    --color-accent-600: #b45309;
+
+    --color-primary: #171717;
+    --color-primary-hover: #262626;
 }
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-sans);
+    color: #171717;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Bangla numerals support */
+.bangla { font-feature-settings: "lnum"; }
+
+/* Countdown timer */
+.countdown-expired { color: #ef4444; font-weight: 600; }
+
+/* Flash message animation */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.flash-message { animation: slideDown 0.3s ease; }
+
+/* Smooth image hover scale */
+.product-image-wrap { overflow: hidden; }
+.product-image-wrap img { transition: transform 0.4s ease; }
+.product-image-wrap:hover img { transform: scale(1.05); }
+
+/* Star rating */
+.star { color: #d1d5db; cursor: pointer; transition: color 0.15s; }
+.star.active, .star:hover { color: #f59e0b; }
+
+/* Admin sidebar */
+.admin-sidebar { transition: transform 0.3s ease; }
+
+/* Skeleton loader */
+@keyframes shimmer {
+    0%   { background-position: -1000px 0; }
+    100% { background-position:  1000px 0; }
+}
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+

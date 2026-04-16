@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class CheckoutRequest extends FormRequest
+{
+    /**
+     * All customers may checkout (guest checkout).
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public function rules(): array
+    {
+        return [
+            'customer_name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'address' => ['required', 'string', 'max:1000'],
+            'payment_method' => ['required', 'in:cod,bkash,nagad'],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'customer_name.required' => 'আপনার পূর্ণ নাম দিন।',
+            'phone.required' => 'ফোন নম্বর দিন।',
+            'address.required' => 'ডেলিভারি ঠিকানা দিন।',
+            'payment_method.required' => 'পেমেন্ট পদ্ধতি নির্বাচন করুন।',
+        ];
+    }
+}
