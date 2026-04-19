@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '../assets/fonts/SolaimanLipi/font.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,7 +7,7 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Inter', 'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'SolaimanLipi', sans-serif;
 
     --color-brand-50:  #f8f8f8;
     --color-brand-100: #f0f0f0;
@@ -32,6 +33,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
+
+
+/* * {
+    font-family: 'SolaimanLipi', sans-serif !important;
+} */
 
 body {
     font-family: var(--font-sans);
