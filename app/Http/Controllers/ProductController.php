@@ -15,6 +15,15 @@ class ProductController extends Controller
     {
         $query = Product::active();
 
+        // Search by name or description
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                  ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
         // Filter by price range
         if ($request->filled('min_price')) {
             $query->where('price', '>=', $request->min_price);
