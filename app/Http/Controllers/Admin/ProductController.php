@@ -44,7 +44,7 @@ class ProductController extends Controller
         $data['images'] = $this->uploadImages($request);
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_new_arrival'] = $request->boolean('is_new_arrival');
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data['is_active'] = $request->boolean('is_active');
         $data['total_stock'] = $this->calculateStock($data['sizes'] ?? []);
 
         Product::create($data);
@@ -69,7 +69,7 @@ class ProductController extends Controller
         $data['slug'] = $data['slug'] ?? $product->slug;
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_new_arrival'] = $request->boolean('is_new_arrival');
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data['is_active'] = $request->boolean('is_active');
         $data['total_stock'] = $this->calculateStock($data['sizes'] ?? $product->sizes ?? []);
 
         // Merge new uploads with existing images

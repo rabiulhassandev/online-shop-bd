@@ -55,8 +55,19 @@ class SliderController extends Controller
      */
     public function update(SliderRequest $request, Slider $slider): RedirectResponse
     {
-        $data = $request->validated();
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'button_text' => 'nullable|string|max:255',
+            'button_link' => 'nullable|string|max:255',
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if (!isset($data['is_active'])) {
+            $data['is_active'] = false;
+        }
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('sliders', 'public');

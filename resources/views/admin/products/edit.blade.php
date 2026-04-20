@@ -7,9 +7,11 @@
     <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" x-data="{
         sizes: {{ json_encode($product->sizes ?? [['size'=>'S','stock'=>0],['size'=>'M','stock'=>0],['size'=>'L','stock'=>0],['size'=>'XL','stock'=>0],['size'=>'XXL','stock'=>0]]) }},
         colors: {{ json_encode($product->colors ?? []) }},
+        existingImages: {{ json_encode($product->images ?? []) }},
         newColor: '',
         addColor() { if (this.newColor.trim()) { this.colors.push(this.newColor.trim()); this.newColor = ''; } },
-        removeColor(i) { this.colors.splice(i, 1); }
+        removeColor(i) { this.colors.splice(i, 1); },
+        removeExistingImage(i) { this.existingImages.splice(i, 1); }
     }">
         @csrf @method('PUT')
         @if($errors->any())
@@ -102,20 +104,35 @@
                     </div>
                 </div>
 
-                {{-- Existing Images --}}
-                @if(!empty($product->images))
-                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                    <h3 class="font-semibold text-gray-900 mb-4">বিদ্যমান ছবি</h3>
-                    <div class="flex flex-wrap gap-3">
-                        @foreach($product->images as $img)
-                        <div class="relative">
-                            <img src="{{ asset('storage/'.$img) }}" alt="" class="w-20 h-20 rounded-xl object-cover border border-gray-200">
-                            <input type="hidden" name="existing_images[]" value="{{ $img }}">
-                        </div>
-                        @endforeach
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm" x-show="existingImages.length > 0">
+                    <h3 class="font-semibold text-gray-900 mb-4">বিদ্যমান ছবি <span class="text-xs font-normal text-gray-400 font-sans ml-2">(টেনে ধরে অর্ডার পরিবর্তন করুন)</span></h3>
+                    <div class="flex flex-wrap gap-4" x-init="
+                        new Sortable($el, {
+                            animation: 150,
+                            ghostClass: 'opacity-40',
+                            onEnd: (evt) => {
+                                if (evt.oldIndex !== evt.newIndex) {
+                                    const item = existingImages.splice(evt.oldIndex, 1)[0];
+                                    existingImages.splice(evt.newIndex, 0, item);
+                                }
+                            }
+                        })
+                    ">
+                        <template x-for="(img, i) in existingImages" :key="img">
+                            <div class="relative w-14 h-14 block group cursor-move transition-transform hover:scale-110 z-10">
+                                <img :src="'/storage/' + img" alt="" 
+                                     class="w-full h-full rounded-lg object-cover border border-gray-100 shadow-sm group-hover:border-amber-400 group-hover:ring-2 group-hover:ring-amber-500/10">
+                                
+                                {{-- Delete Button (Top Right) --}}
+                                <button type="button" @click="removeExistingImage(i)"
+                                        class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-sm hover:bg-red-600 transition-colors border-2 border-white z-30">
+                                    &times;
+                                </button>
+                                <input type="hidden" name="existing_images[]" :value="img">
+                            </div>
+                        </template>
                     </div>
                 </div>
-                @endif
 
                 <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                     <h3 class="font-semibold text-gray-900 mb-4">নতুন ছবি যোগ করুন</h3>
@@ -149,3 +166,7 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+@endpush
