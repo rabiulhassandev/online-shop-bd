@@ -16,7 +16,7 @@ class DiscountController extends Controller
     public function index(): View
     {
         $products = Product::active()
-            ->select(['id', 'name', 'price', 'discounted_price', 'discount_start_at', 'discount_end_at'])
+            ->select(['id', 'name', 'slug', 'price', 'discounted_price', 'discount_start_at', 'discount_end_at'])
             ->latest()
             ->paginate(20);
 

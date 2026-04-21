@@ -40,6 +40,9 @@ Route::middleware('maintenance')->group(function (): void {
         Route::post('/order-now', [CheckoutController::class, 'storeOrderNow'])->name('store-order-now');
         Route::get('/confirmation/{order}', [CheckoutController::class, 'confirmation'])->name('confirmation');
     });
+
+    // About Us
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
 });
 
 /*

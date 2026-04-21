@@ -26,6 +26,7 @@ class SettingRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'address' => ['nullable', 'string', 'max:500'],
+            'about_us' => ['nullable', 'string', 'max:10000'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'facebook_url' => ['nullable', 'url', 'max:500'],
             'delivery_charge' => ['nullable', 'numeric', 'min:0'],

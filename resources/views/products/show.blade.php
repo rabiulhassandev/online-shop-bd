@@ -71,11 +71,6 @@
                 @endif
             </div>
 
-            {{-- Description --}}
-            @if($product->description)
-            <p class="text-gray-600 leading-relaxed mb-6 text-sm">{{ $product->description }}</p>
-            @endif
-
             {{-- Size Selector --}}
             @if(!empty($product->sizes))
             <div class="mb-5">
@@ -165,6 +160,15 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <div class="py-2">
+        {{-- Description --}}
+        @if($product->description)
+        <div class="text-gray-600 leading-relaxed mb-6 text-sm prose prose-sm prose-a:text-amber-500 max-w-none">
+            {!! $product->description !!}
+        </div>
+        @endif
     </div>
 
     {{-- Reviews Section --}}

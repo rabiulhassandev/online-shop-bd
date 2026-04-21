@@ -51,4 +51,15 @@ class HomeController extends Controller
             'facebook',
         ));
     }
+
+    /**
+     * Show the about us page.
+     */
+    public function about(): View
+    {
+        $aboutUs = Setting::get('about_us', '<p>আমাদের সম্পর্কে তথ্য শীঘ্রই যুক্ত করা হবে।</p>');
+        $siteName = Setting::get('site_name', 'কাতুয়া শার্ট');
+
+        return view('about', compact('aboutUs', 'siteName'));
+    }
 }

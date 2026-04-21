@@ -2,9 +2,17 @@
 @section('title', 'সাইট সেটিংস')
 @section('page-title', 'সাইট সেটিংস')
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css" rel="stylesheet">
+<style>
+.ql-container { font-size: 14px; font-family: Inter, sans-serif; }
+.ql-editor { min-height: 250px; padding: 12px; }
+</style>
+@endpush
+
 @section('content')
 <div class="max-w-2xl">
-    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data" id="settingsForm">
         @csrf
         @if($errors->any())
             <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm mb-5">
@@ -79,6 +87,16 @@
             </div>
         </div>
 
+        {{-- About Us --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5" x-data="{}">
+            <h3 class="font-semibold text-gray-900 mb-4">আমাদের সম্পর্কে</h3>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">আমাদের সম্পর্কে বর্ণনা</label>
+                <div id="about_us_editor" class="w-full border border-gray-300 rounded-xl bg-white h-64 text-sm focus-within:ring-2 focus-within:ring-amber-400"></div>
+                <textarea name="about_us" class="hidden">{{ $settings->get('about_us') }}</textarea>
+            </div>
+        </div>
+
         {{-- Maintenance Mode --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-6">
             <div class="flex items-center justify-between">
@@ -98,4 +116,44 @@
         </button>
     </form>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const aboutUsTextarea = document.querySelector('[name=about_us]');
+  if (!aboutUsTextarea) {
+    console.error('about_us textarea not found');
+    return;
+  }
+
+  const aboutUsQuill = new Quill('#about_us_editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        ['blockquote', 'code-block'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+      ]
+    },
+    placeholder: 'আপনার ব্যবসার সম্পর্কে লিখুন...'
+  });
+
+  // Load existing content into Quill
+  if (aboutUsTextarea.value) {
+    aboutUsQuill.root.innerHTML = aboutUsTextarea.value;
+  }
+
+  // Sync to textarea before form submission
+  const settingsForm = document.getElementById('settingsForm');
+  if (settingsForm) {
+    settingsForm.addEventListener('submit', function(e) {
+      aboutUsTextarea.value = aboutUsQuill.root.innerHTML;
+    });
+  }
+});
+</script>
+@endpush
 @endsection

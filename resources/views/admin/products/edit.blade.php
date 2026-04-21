@@ -2,6 +2,14 @@
 @section('title', 'পণ্য সম্পাদনা')
 @section('page-title', 'পণ্য সম্পাদনা')
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css" rel="stylesheet">
+<style>
+.ql-container { font-size: 14px; font-family: Inter, sans-serif; }
+.ql-editor { min-height: 250px; padding: 12px; }
+</style>
+@endpush
+
 @section('content')
 <div class="max-w-4xl">
     <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" x-data="{
@@ -37,8 +45,8 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">বিবরণ</label>
-                            <textarea name="description" rows="4"
-                                      class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none">{{ old('description', $product->description) }}</textarea>
+                            <div id="product_description" class="w-full border border-gray-300 rounded-xl bg-white h-64 text-sm focus-within:ring-2 focus-within:ring-amber-400"></div>
+                            <textarea name="description" class="hidden">{{ old('description', $product->description) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -168,5 +176,29 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+const quill = new Quill('#product_description', {
+  theme: 'snow',
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['link'],
+      ['clean']
+    ]
+  },
+  placeholder: 'নিজের পণ্যের বিবরণ টাইপ করুন...'
+});
+
+quill.root.innerHTML = document.querySelector('[name=description]').value || '';
+
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', function() {
+    document.querySelector('[name=description]').value = quill.root.innerHTML;
+  });
+});
+</script>
 @endpush
