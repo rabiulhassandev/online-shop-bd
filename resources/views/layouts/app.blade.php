@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@yield('meta_description', 'কাতুয়া শার্ট — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।')">
     <title>@yield('title', 'কাতুয়া শার্ট') | প্রিমিয়াম শার্ট ব্র্যান্ড</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {{-- Icon --}}
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,7 +19,7 @@
 <header class="bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Row 1: Search --}}
-        <div class="py-3 border-b border-gray-100">
+        <div class="py-2 border-b border-gray-100">
             <form action="{{ route('products.index') }}" method="GET" class="relative mx-auto w-full max-w-2xl">
                 <input
                     type="text"
@@ -36,7 +37,7 @@
         </div>
 
         {{-- Row 2: Logo, Links, Cart --}}
-        <nav class="py-3">
+        <nav class="py-1">
             <div class="flex items-center justify-between gap-4">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
@@ -59,42 +60,10 @@
 
                 {{-- Actions --}}
                 <div class="flex items-center gap-2 sm:gap-3">
-                    {{-- Phone (Hidden on mobile) --}}
-                    <a href="tel:{{ \App\Models\Setting::get('phone') }}" class="hidden md:flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100">
-                        <svg class="h-5 w-5 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                        </svg>
-                        <span class="hidden lg:inline">{{ \App\Models\Setting::get('phone', '01700000000') }}</span>
-                    </a>
-
-                    {{-- Login Button --}}
-                    @if(auth()->check())
-                        <div class="hidden md:block relative group">
-                            <button class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
-                                <span class="hidden lg:inline">{{ auth()->user()->name }}</span>
-                            </button>
-                            <div class="absolute right-0 mt-1 hidden w-32 rounded-lg bg-white shadow-lg group-hover:block z-50">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg">আমার অ্যাকাউন্ট</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">আমার অর্ডার</a>
-                                <form method="POST" action="{{ route('logout') }}" class="block">
-                                    @csrf
-                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-b-lg">লগ আউট</button>
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                        <a href="{{ route('admin.login') }}" class="hidden md:inline-block rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-amber-600">লগইন</a>
-                    @endif
-
                     {{-- Cart icon --}}
                     <a href="{{ route('cart.index') }}" class="relative group">
                         <div class="rounded-lg p-2 transition-colors hover:bg-gray-100">
-                            <svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.876-7.153A60.373 60.373 0 0 0 4.5 5.25H3.106L2.25 3zM7.5 14.25 5.106 5.25M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                            </svg>
+                            <i class="bx bx-cart ring-amber-500 mb-0" style="font-size: 25px;"></i>
                         </div>
                         @php $cartCount = app(\App\Services\CartService::class)->count(); @endphp
                         @if($cartCount > 0)
