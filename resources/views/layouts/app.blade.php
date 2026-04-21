@@ -41,7 +41,7 @@
             <div class="flex items-center justify-between gap-4">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
-                    @if(\App\Models\Setting::get('site_logo') == 0)
+                    @if(\App\Models\Setting::get('site_logo') != 0)
                         <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                     @else
                         <div>
@@ -53,9 +53,10 @@
 
                 {{-- Desktop Navigation Links --}}
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="{{ route('home') }}" class="border-b-2 pb-1 text-sm font-medium transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">হোম</a>
-                    <a href="{{ route('products.index') }}" class="border-b-2 pb-1 text-sm font-medium transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">সব পণ্য</a>
-                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1 text-sm font-medium text-gray-700 transition-colors hover:text-amber-500">যোগাযোগ</a>
+                    <a href="{{ route('home') }}" class="border-b-2 pb-1  text-md transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">হোম</a>
+                    <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
+                    <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">সব পণ্য</a>
+                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1   text-md text-gray-700 transition-colors hover:text-amber-500">যোগাযোগ</a>
                 </div>
 
                 {{-- Actions --}}
@@ -87,28 +88,10 @@
     {{-- Mobile menu --}}
     <div id="mobile-menu" class="hidden border-t border-gray-100 bg-gray-50 py-4 lg:hidden">
         <div class="max-w-7xl mx-auto space-y-3 px-4 sm:px-6">
-            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">হোম</a>
-            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">সব পণ্য</a>
-            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">যোগাযোগ</a>
-            <a href="tel:{{ \App\Models\Setting::get('phone') }}" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-amber-500 hover:bg-white">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-                কল করুন
-            </a>
-            @if(auth()->check())
-                <div class="border-t border-gray-200 pt-3 mt-3">
-                    <p class="text-xs font-semibold text-gray-500 px-3 py-1 uppercase">আপনার অ্যাকাউন্ট</p>
-                    <a href="#" class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">আমার অ্যাকাউন্ট</a>
-                    <a href="#" class="block rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">আমার অর্ডার</a>
-                    <form method="POST" action="{{ route('logout') }}" class="mt-1">
-                        @csrf
-                        <button type="submit" class="w-full text-left rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white">লগ আউট</button>
-                    </form>
-                </div>
-            @else
-                <a href="{{ route('admin.login') }}" class="block rounded-md bg-amber-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-amber-600">লগইন</a>
-            @endif
+            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2   text-md text-gray-700 hover:bg-white">হোম</a>
+            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-gray-700 hover:bg-white">আমাদের সম্পর্কে</a>
+            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-gray-700 hover:bg-white">সব পণ্য</a>
+            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2   text-md text-gray-700 hover:bg-white">যোগাযোগ</a>
         </div>
     </div>
 </header>
