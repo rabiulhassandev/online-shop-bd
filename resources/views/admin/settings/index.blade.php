@@ -52,7 +52,7 @@
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
             <h3 class="font-semibold text-gray-900 mb-4">যোগাযোগ তথ্য</h3>
             <div class="space-y-4">
-                @foreach([['key' => 'phone', 'label' => 'ফোন নম্বর', 'type' => 'text'], ['key' => 'email', 'label' => 'ইমেইল', 'type' => 'email'], ['key' => 'whatsapp', 'label' => 'WhatsApp নম্বর (কান্ট্রি কোড সহ)', 'type' => 'text'], ['key' => 'facebook_url', 'label' => 'Facebook URL', 'type' => 'url']] as $field)
+                @foreach([['key' => 'phone', 'label' => 'ফোন নম্বর', 'type' => 'text'], ['key' => 'email', 'label' => 'ইমেইল', 'type' => 'email'], ['key' => 'whatsapp', 'label' => 'WhatsApp নম্বর (কান্ট্রি কোড সহ)', 'type' => 'text'], ['key' => 'facebook_url', 'label' => 'Facebook URL', 'type' => 'url'], ['key' => 'instagram_url', 'label' => 'Instagram URL', 'type' => 'url']] as $field)
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ $field['label'] }}</label>
                     <input type="{{ $field['type'] }}" name="{{ $field['key'] }}" value="{{ $settings->get($field['key']) }}"

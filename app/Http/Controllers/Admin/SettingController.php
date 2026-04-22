@@ -41,7 +41,7 @@ class SettingController extends Controller
         }
 
         // Map remaining scalar fields
-        $scalarFields = ['site_name', 'phone', 'email', 'address', 'about_us', 'whatsapp', 'facebook_url', 'delivery_charge'];
+        $scalarFields = ['site_name', 'phone', 'email', 'address', 'about_us', 'whatsapp', 'facebook_url', 'instagram_url', 'delivery_charge'];
         foreach ($scalarFields as $field) {
             $settingsToSave[$field] = $validated[$field] ?? null;
         }

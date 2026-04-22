@@ -29,6 +29,7 @@ class SettingRequest extends FormRequest
             'about_us' => ['nullable', 'string', 'max:10000'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'facebook_url' => ['nullable', 'url', 'max:500'],
+            'instagram_url' => ['nullable', 'url', 'max:500'],
             'delivery_charge' => ['nullable', 'numeric', 'min:0'],
             'cod_enabled' => ['nullable', 'boolean'],
             'bkash_enabled' => ['nullable', 'boolean'],
