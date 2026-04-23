@@ -9,8 +9,8 @@
 <body class="min-h-screen bg-gray-900 flex items-center justify-center px-4">
     <div class="text-center max-w-md">
         <div class="text-7xl mb-6">🔧</div>
-        <h1 class="text-3xl font-bold text-white mb-3">মেইনটেন্যান্স চলছে</h1>
-        <p class="text-gray-400 mb-8">আমরা কিছু উন্নতি করছি। অল্প সময়ের মধ্যে ফিরে আসব।</p>
+        <h1 class="text-3xl font-bold text-amber-400 mb-3">মেইনটেন্যান্স চলছে</h1>
+        <p class="text-gray-400 mb-8">আমরা আপনার শপিং অভিজ্ঞতা আরও উন্নত করতে ওয়েবসাইট আপডেটের কাজ করছি।</p>
         <p class="text-sm text-gray-500">যোগাযোগ: {{ \App\Models\Setting::get('phone', '01700000000') }}</p>
     </div>
 </body>

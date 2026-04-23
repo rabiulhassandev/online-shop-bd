@@ -32,6 +32,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">লোগো</label>
+                        <p class="text-xs text-red-500 mb-2">PNG, JPG • 360px × 100px</p>
                         @if($settings->get('site_logo'))
                             <img src="{{ asset('storage/'.$settings->get('site_logo')) }}" class="h-10 mb-2 rounded">
                         @endif
@@ -39,6 +40,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">ফেভিকন</label>
+                        <p class="text-xs text-red-500 mb-2">PNG, JPG • 50px × 50px (< 256KB)</p>
                         @if($settings->get('site_favicon'))
                             <img src="{{ asset('storage/'.$settings->get('site_favicon')) }}" class="h-8 mb-2">
                         @endif
@@ -65,6 +67,16 @@
                 </div>
             </div>
         </div>
+
+        {{-- Product Promo Text --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
+            <h3 class="font-semibold text-gray-900 mb-4">পণ্য প্রমো টেক্সট</h3>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">পণ্য প্রমো টেক্সট</label>
+                <textarea name="product_promo_text" rows="3" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none">{{ $settings->get('product_promo_text') }}</textarea>
+            </div>
+        </div>
+
 
         {{-- Delivery & Payment --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
@@ -97,6 +109,26 @@
             </div>
         </div>
 
+        {{-- Terms & Conditions --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5" x-data="{}">
+            <h3 class="font-semibold text-gray-900 mb-4">শর্তাবলী</h3>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">শর্তাবলী বিষয়বস্তু</label>
+                <div id="terms_and_conditions_editor" class="w-full border border-gray-300 rounded-xl bg-white h-64 text-sm focus-within:ring-2 focus-within:ring-amber-400"></div>
+                <textarea name="terms_and_conditions" class="hidden">{{ $settings->get('terms_and_conditions') }}</textarea>
+            </div>
+        </div>
+
+        {{-- Return Policy --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5" x-data="{}">
+            <h3 class="font-semibold text-gray-900 mb-4">রিটার্ন পলিসি</h3>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">রিটার্ন পলিসি বিষয়বস্তু</label>
+                <div id="return_policy_editor" class="w-full border border-gray-300 rounded-xl bg-white h-64 text-sm focus-within:ring-2 focus-within:ring-amber-400"></div>
+                <textarea name="return_policy" class="hidden">{{ $settings->get('return_policy') }}</textarea>
+            </div>
+        </div>
+
         {{-- Maintenance Mode --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-6">
             <div class="flex items-center justify-between">
@@ -121,13 +153,8 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const aboutUsTextarea = document.querySelector('[name=about_us]');
-  if (!aboutUsTextarea) {
-    console.error('about_us textarea not found');
-    return;
-  }
-
-  const aboutUsQuill = new Quill('#about_us_editor', {
+  const settingsForm = document.getElementById('settingsForm');
+  const quillConfig = {
     theme: 'snow',
     modules: {
       toolbar: [
@@ -137,20 +164,40 @@ document.addEventListener('DOMContentLoaded', function() {
         ['link'],
         ['clean']
       ]
-    },
-    placeholder: 'আপনার ব্যবসার সম্পর্কে লিখুন...'
+    }
+  };
+
+  const editors = [
+    { id: '#about_us_editor', name: 'about_us', placeholder: 'আপনার ব্যবসার সম্পর্কে লিখুন...' },
+    { id: '#terms_and_conditions_editor', name: 'terms_and_conditions', placeholder: 'শর্তাবলী লিখুন...' },
+    { id: '#return_policy_editor', name: 'return_policy', placeholder: 'রিটার্ন পলিসি লিখুন...' }
+  ];
+
+  const quillInstances = {};
+
+  editors.forEach(function(editor) {
+    const textarea = document.querySelector('[name=' + editor.name + ']');
+    const container = document.querySelector(editor.id);
+    if (!textarea || !container) return;
+
+    quillInstances[editor.name] = new Quill(editor.id, {
+      ...quillConfig,
+      placeholder: editor.placeholder
+    });
+
+    if (textarea.value) {
+      quillInstances[editor.name].root.innerHTML = textarea.value;
+    }
   });
 
-  // Load existing content into Quill
-  if (aboutUsTextarea.value) {
-    aboutUsQuill.root.innerHTML = aboutUsTextarea.value;
-  }
-
-  // Sync to textarea before form submission
-  const settingsForm = document.getElementById('settingsForm');
   if (settingsForm) {
-    settingsForm.addEventListener('submit', function(e) {
-      aboutUsTextarea.value = aboutUsQuill.root.innerHTML;
+    settingsForm.addEventListener('submit', function() {
+      Object.keys(quillInstances).forEach(function(name) {
+        const textarea = document.querySelector('[name=' + name + ']');
+        if (textarea) {
+          textarea.value = quillInstances[name].root.innerHTML;
+        }
+      });
     });
   }
 });

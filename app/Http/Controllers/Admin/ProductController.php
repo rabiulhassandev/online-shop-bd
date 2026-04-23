@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +32,9 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('admin.products.create');
+        $categories = Category::where('is_active', true)->whereNull('parent_id')->orderBy('sort_order')->get();
+
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -57,7 +60,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        return view('admin.products.edit', compact('product'));
+        $categories = Category::where('is_active', true)->whereNull('parent_id')->orderBy('sort_order')->get();
+
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**

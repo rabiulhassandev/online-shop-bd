@@ -62,4 +62,26 @@ class HomeController extends Controller
 
         return view('about', compact('aboutUs', 'siteName'));
     }
+
+    /**
+     * Show the terms & conditions page.
+     */
+    public function terms(): View
+    {
+        $content = Setting::get('terms_and_conditions', '<p>শর্তাবলী শীঘ্রই যুক্ত করা হবে।</p>');
+        $siteName = Setting::get('site_name', 'কাতুয়া শার্ট');
+
+        return view('terms', compact('content', 'siteName'));
+    }
+
+    /**
+     * Show the return policy page.
+     */
+    public function returnPolicy(): View
+    {
+        $content = Setting::get('return_policy', '<p>রিটার্ন পলিসি শীঘ্রই যুক্ত করা হবে।</p>');
+        $siteName = Setting::get('site_name', 'কাতুয়া শার্ট');
+
+        return view('return-policy', compact('content', 'siteName'));
+    }
 }

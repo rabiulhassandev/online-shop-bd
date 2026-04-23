@@ -21,11 +21,15 @@ class SettingSeeder extends Seeder
             'email' => 'info@katuashirt.com',
             'address' => 'ঢাকা, বাংলাদেশ',
             'whatsapp' => '8801700000000',
+            'instagram_url' => 'https://instagram.com/katuashirt',
             'facebook_url' => 'https://facebook.com/katuashirt',
             'delivery_charge' => '80',
             'cod_enabled' => '1',
             'bkash_enabled' => '1',
             'nagad_enabled' => '1',
+            'product_promo_text' => 'এই পণ্যটির উপর প্রযোজ্য অফার আছে।',
+            'terms_and_conditions' => '<p>শর্তাবলী শীঘ্রই যুক্ত করা হবে।</p>',
+            'return_policy' => '<p>রিটার্ন পলিসি শীঘ্রই যুক্ত করা হবে।</p>',
             'maintenance_mode' => '0',
         ];
 

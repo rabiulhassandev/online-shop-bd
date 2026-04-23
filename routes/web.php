@@ -43,6 +43,12 @@ Route::middleware('maintenance')->group(function (): void {
 
     // About Us
     Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+    // Terms & Conditions
+    Route::get('/terms-and-conditions', [HomeController::class, 'terms'])->name('terms');
+
+    // Return Policy
+    Route::get('/return-policy', [HomeController::class, 'returnPolicy'])->name('return-policy');
 });
 
 /*

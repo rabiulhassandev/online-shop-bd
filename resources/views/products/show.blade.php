@@ -71,6 +71,12 @@
                 @endif
             </div>
 
+            <!-- add alert -->
+            <div class="bg-amber-100 border border-amber-400 text-amber-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">অফার নিশ্চিত করুন!</strong>
+                <span class="block sm:inline">{{ \App\Models\Setting::get('product_promo_text', 'এই পণ্যটির উপর প্রযোজ্য অফার আছে।') }}</span>
+            </div>
+
             {{-- Size Selector --}}
             @if(!empty($product->sizes))
             <div class="mb-5">
@@ -158,6 +164,11 @@
                         ⚡ এখনই অর্ডার করুন
                     </button>
                 </form>
+            </div>
+
+            <!-- Product Chart Image (public/assets/images/product-chart.jpeg) -->
+            <div class="mt-10">
+                <img src="{{ asset('assets/images/product-chart.jpeg') }}" alt="Product Chart" class="w-full rounded-lg border border-gray-200">
             </div>
         </div>
     </div>

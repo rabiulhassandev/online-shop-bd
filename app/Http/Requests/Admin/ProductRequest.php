@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
             'discount_start_at' => ['nullable', 'date'],
             'discount_end_at' => ['nullable', 'date', 'after:discount_start_at'],
             'sizes' => ['nullable', 'array'],
-            'sizes.*.size' => ['required', 'in:S,M,L,XL,XXL'],
+            'sizes.*.size' => ['required', 'in:S,M,L,XL,XXL,3XL,4XL'],
             'sizes.*.stock' => ['required', 'integer', 'min:0'],
             'colors' => ['nullable', 'array'],
             'colors.*' => ['required', 'string', 'max:50'],

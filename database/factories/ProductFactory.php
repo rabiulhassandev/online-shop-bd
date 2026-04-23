@@ -46,7 +46,7 @@ class ProductFactory extends Factory
         $discountedPrice = $hasDiscount ? round($price * fake()->randomFloat(2, 0.6, 0.85)) : null;
 
         $sizes = [];
-        foreach (['S', 'M', 'L', 'XL', 'XXL'] as $size) {
+        foreach (['M', 'L', 'XL', 'XXL', '3XL', '4XL'] as $size) {
             if (fake()->boolean(75)) {
                 $sizes[] = ['size' => $size, 'stock' => fake()->numberBetween(0, 25)];
             }

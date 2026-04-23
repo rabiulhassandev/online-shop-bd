@@ -18,7 +18,7 @@
 <body class="bg-white text-gray-900 antialiased">
 
 {{-- Header --}}
-<header class="bg-white border-b border-gray-200 shadow-sm">
+<header class="bg-gray-900 border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Row 1: Search --}}
         <div class="py-2 border-b border-gray-100">
@@ -28,7 +28,7 @@
                     name="search"
                     value="{{ request('search') }}"
                     placeholder="পণ্য খুঁজুন..."
-                    class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm text-gray-700 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    class="bg-white w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm text-gray-700 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 >
                 <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,37 +47,37 @@
                         <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                     @else
                         <div>
-                            <div class="text-2xl font-bold tracking-tight text-gray-900">কাতুয়া <span class="text-amber-500">শার্ট</span></div>
-                            <div class="text-xs text-gray-500">প্রিমিয়াম শার্ট ব্র্যান্ড</div>
+                            <div class="text-2xl font-bold tracking-tight text-white">কাতুয়া <span class="text-red-500">শার্ট</span></div>
+                            <div class="text-xs text-white">প্রিমিয়াম শার্ট ব্র্যান্ড</div>
                         </div>
                     @endif
                 </a>
 
                 {{-- Desktop Navigation Links --}}
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="{{ route('home') }}" class="border-b-2 pb-1  text-md transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">হোম</a>
-                    <a href="{{ route('about') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('about') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
-                    <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-700 hover:text-amber-500' }}">সব পণ্য</a>
-                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1   text-md text-gray-700 transition-colors hover:text-amber-500">যোগাযোগ</a>
+                    <a href="{{ route('home') }}" class="border-b-2 pb-1  text-md transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-white' : 'border-transparent text-white hover:text-amber-500' }}">হোম</a>
+                    <a href="{{ route('about') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('about') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
+                    <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">সব পণ্য</a>
+                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1   text-md text-white transition-colors hover:text-amber-500">যোগাযোগ</a>
                 </div>
 
                 {{-- Actions --}}
                 <div class="flex items-center gap-2 sm:gap-3">
                     {{-- Cart icon --}}
                     <a href="{{ route('cart.index') }}" class="relative group">
-                        <div class="rounded-lg p-2 transition-colors hover:bg-gray-100">
-                            <i class="bx bx-cart ring-amber-500 mb-0" style="font-size: 25px;"></i>
+                        <div class=" text-white hover:text-amber-500 rounded-lg p-2 transition-colors hover:bg-gray-100">
+                            <i class="bx bx-cart ring-white mb-0" style="font-size: 25px;"></i>
                         </div>
                         @php $cartCount = app(\App\Services\CartService::class)->count(); @endphp
                         @if($cartCount > 0)
-                            <span id="cart-count-badge" class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">{{ $cartCount }}</span>
+                            <span id="cart-count-badge" class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-white">{{ $cartCount }}</span>
                         @else
-                            <span id="cart-count-badge" class="hidden absolute -right-1 -top-1 h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white"></span>
+                            <span id="cart-count-badge" class="hidden absolute -right-1 -top-1 h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-white"></span>
                         @endif
                     </a>
 
                     {{-- Mobile menu button --}}
-                    <button id="mobile-menu-btn" class="rounded-md p-2 hover:bg-gray-100 lg:hidden">
+                    <button id="mobile-menu-btn" class="rounded-md p-2 hover:bg-white text-white hover:text-amber-500 lg:hidden">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -88,12 +88,12 @@
     </div>
 
     {{-- Mobile menu --}}
-    <div id="mobile-menu" class="hidden border-t border-gray-100 bg-gray-50 py-4 lg:hidden">
+    <div id="mobile-menu" class="hidden border-t border-gray-100 bg-gray-900 py-4 lg:hidden">
         <div class="max-w-7xl mx-auto space-y-3 px-4 sm:px-6">
-            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2   text-md text-gray-700 hover:bg-white">হোম</a>
-            <a href="{{ route('about') }}" class="block rounded-md px-3 py-2 text-md text-gray-700 hover:bg-white">আমাদের সম্পর্কে</a>
-            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-gray-700 hover:bg-white">সব পণ্য</a>
-            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2   text-md text-gray-700 hover:bg-white">যোগাযোগ</a>
+            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">হোম</a>
+            <a href="{{ route('about') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">আমাদের সম্পর্কে</a>
+            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">সব পণ্য</a>
+            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">যোগাযোগ</a>
         </div>
     </div>
 </header>
@@ -127,8 +127,12 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             {{-- Brand --}}
             <div>
+                @if(\App\Models\Setting::get('site_logo') != 0)
+                    <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
+                @else
                 <h3 class="text-white text-xl font-bold mb-3">কাতুয়া <span class="text-amber-400">শার্ট</span></h3>
-                <p class="text-sm text-gray-400 leading-relaxed">বাংলাদেশের প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট, সাশ্রয়ী মূল্যে।</p>
+                @endif
+                <p class="text-sm text-gray-400 leading-relaxed space-y-2">Your Style, Your Signature</p>
             </div>
 
             {{-- Quick Links --}}
@@ -138,6 +142,8 @@
                     <li><a href="{{ route('home') }}"           class="hover:text-amber-400 transition-colors">হোম</a></li>
                     <li><a href="{{ route('products.index') }}" class="hover:text-amber-400 transition-colors">সব পণ্য</a></li>
                     <li><a href="{{ route('cart.index') }}"     class="hover:text-amber-400 transition-colors">কার্ট</a></li>
+                    <li><a href="{{ route('terms') }}"          class="hover:text-amber-400 transition-colors">শর্তাবলী</a></li>
+                    <li><a href="{{ route('return-policy') }}"  class="hover:text-amber-400 transition-colors">রিটার্ন পলিসি</a></li>
                 </ul>
             </div>
 
@@ -159,10 +165,14 @@
                     </li>
                     @if(\App\Models\Setting::get('instagram_url'))
                     <li class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-pink-400 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.015-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/></svg>
+                        <svg class="w-4 h-4 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.015-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/></svg>
                         <a href="{{ \App\Models\Setting::get('instagram_url', '#') }}" target="_blank" class="hover:text-amber-400 transition-colors">Instagram</a>
                     </li>
                     @endif
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <a href="mailto:{{ \App\Models\Setting::get('email', 'info@example.com') }}" class="hover:text-white transition-colors">{{ \App\Models\Setting::get('email', 'info@example.com') }}</a>
+                    </li>
                     <li class="flex items-center gap-2">
                         <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         <span>{{ \App\Models\Setting::get('address', 'ঢাকা, বাংলাদেশ') }}</span>
@@ -172,7 +182,7 @@
         </div>
 
         <div class="border-t border-gray-800 mt-10 pt-6 text-center text-xs text-gray-500">
-            &copy; {{ date('Y') }} কাতুয়া শার্ট। সকল স্বত্ব সংরক্ষিত।
+            &copy; {{ date('Y') }} Men's Signature | All rights reserved.
         </div>
     </div>
 </footer>

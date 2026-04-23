@@ -38,7 +38,7 @@ document.querySelectorAll('form').forEach(form => {
 @section('content')
 <div class="max-w-4xl">
     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" x-data="{
-        sizes: [{ size: 'S', stock: 0 }, { size: 'M', stock: 0 }, { size: 'L', stock: 0 }, { size: 'XL', stock: 0 }, { size: 'XXL', stock: 0 }],
+        sizes: [{ size: 'M', stock: 0 }, { size: 'L', stock: 0 }, { size: 'XL', stock: 0 }, { size: 'XXL', stock: 0 }, { size: '3XL', stock: 0 }, { size: '4XL', stock: 0 }],
         colors: [],
         newColor: '',
         addColor() { if (this.newColor.trim()) { this.colors.push(this.newColor.trim()); this.newColor = ''; } },
