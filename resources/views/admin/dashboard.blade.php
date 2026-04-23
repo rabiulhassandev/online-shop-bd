@@ -8,7 +8,7 @@
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     @foreach([
         ['label' => 'মোট অর্ডার',    'value' => $totalOrders,            'color' => 'blue',   'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'],
-        ['label' => 'মোট রাজস্ব (৳)', 'value' => '৳'.number_format($totalRevenue, 0), 'color' => 'green',  'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
+        ['label' => 'মোট আয় (৳)', 'value' => '৳'.number_format($totalRevenue, 0), 'color' => 'green',  'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
         ['label' => 'পেন্ডিং অর্ডার', 'value' => $pendingOrders,          'color' => 'yellow', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
         ['label' => 'আজকের অর্ডার',  'value' => $todayOrders,            'color' => 'purple', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
     ] as $card)

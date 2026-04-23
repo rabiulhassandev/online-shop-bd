@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@yield('meta_description', 'কাতুয়া শার্ট — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।')">
     <title>@yield('title', 'কাতুয়া শার্ট') | প্রিমিয়াম শার্ট ব্র্যান্ড</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     {{-- Icon --}}
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
