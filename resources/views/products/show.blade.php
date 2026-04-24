@@ -7,10 +7,14 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     {{-- Breadcrumb --}}
-    <nav class="text-sm text-gray-500 mb-6 flex items-center gap-2">
+    <nav class="text-sm text-gray-500 mb-6 flex items-center gap-2 flex-wrap">
         <a href="{{ route('home') }}" class="hover:text-amber-500">হোম</a>
         <span>/</span>
         <a href="{{ route('products.index') }}" class="hover:text-amber-500">পণ্য</a>
+        @if($product->category)
+            <span>/</span>
+            <a href="{{ route('products.index', ['category' => $product->category->slug]) }}" class="hover:text-amber-500">{{ $product->category->name }}</a>
+        @endif
         <span>/</span>
         <span class="text-gray-900">{{ Str::limit($product->name, 40) }}</span>
     </nav>
@@ -49,6 +53,19 @@
         }">
             {{-- Name --}}
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-3">{{ $product->name }}</h1>
+
+            {{-- Category --}}
+            @if($product->category)
+                <div class="mb-4">
+                    <span class="text-sm text-gray-500">ক্যাটাগরি:</span>
+                    <a href="{{ route('products.index', ['category' => $product->category->slug]) }}" class="text-sm font-medium text-amber-600 hover:underline ml-1">
+                        {{ $product->category->name }}
+                        @if($product->category->parent)
+                            <span class="text-gray-400"> → {{ $product->category->parent->name }}</span>
+                        @endif
+                    </a>
+                </div>
+            @endif
 
             {{-- Discount badge + timer --}}
             @if($product->hasActiveDiscount())

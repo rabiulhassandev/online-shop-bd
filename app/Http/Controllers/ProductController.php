@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -56,9 +57,15 @@ class ProductController extends Controller
             default => $query->latest(),
         };
 
-        $products = $query->paginate(10)->withQueryString();
+        $products = $query->with('category')->paginate(10)->withQueryString();
 
-        return view('products.index', compact('products'));
+        $categories = Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->with(['children' => fn ($q) => $q->where('is_active', true)->orderBy('sort_order')])
+            ->get();
+
+        return view('products.index', compact('products', 'categories'));
     }
 
     /**
@@ -68,10 +75,11 @@ class ProductController extends Controller
     {
         abort_unless($product->is_active, 404);
 
-        $product->load('approvedReviews');
+        $product->load(['approvedReviews', 'category']);
 
         $relatedProducts = Product::active()
             ->where('id', '!=', $product->id)
+            ->with('category')
             ->latest()
             ->limit(4)
             ->get();

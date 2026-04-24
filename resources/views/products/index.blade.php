@@ -14,6 +14,19 @@
 
     {{-- Filters --}}
     <form method="GET" action="{{ route('products.index') }}" class="bg-white border border-gray-200 rounded-xl p-4 mb-8 flex flex-wrap gap-4 items-end">
+        <div class="flex-1 min-w-48">
+            <label class="block text-xs font-medium text-gray-600 mb-1">ক্যাটাগরি</label>
+            <select name="category" class="w-full border border-gray-300 rounded-lg text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <option value="">সব ক্যাটাগরি</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->slug }}" {{ request('category') === $category->slug ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @foreach($category->children as $child)
+                        <option value="{{ $child->slug }}" {{ request('category') === $child->slug ? 'selected' : '' }}>└ {{ $child->name }}</option>
+                    @endforeach
+                @endforeach
+            </select>
+        </div>
+
         <div class="flex-1 min-w-40">
             <label class="block text-xs font-medium text-gray-600 mb-1">সাইজ</label>
             <select name="size" class="w-full border border-gray-300 rounded-lg text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
@@ -47,7 +60,7 @@
         </div>
 
         <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors">ফিল্টার করুন</button>
-        @if(request()->hasAny(['size','min_price','max_price','sort']))
+        @if(request()->hasAny(['category','size','min_price','max_price','sort']))
             <a href="{{ route('products.index') }}" class="text-sm text-gray-500 hover:text-red-500 py-2">রিসেট</a>
         @endif
     </form>

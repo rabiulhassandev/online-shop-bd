@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Setting;
@@ -19,15 +20,22 @@ class HomeController extends Controller
 
         $featuredProducts = Product::active()
             ->featured()
-            ->with('approvedReviews')
+            ->with(['approvedReviews', 'category'])
             ->latest()
             ->limit(8)
             ->get();
 
         $newArrivals = Product::active()
             ->newArrival()
+            ->with('category')
             ->latest()
             ->limit(8)
+            ->get();
+
+        $categories = Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->with(['children' => fn ($q) => $q->where('is_active', true)->orderBy('sort_order')])
             ->get();
 
         $testimonials = Review::approved()
@@ -45,6 +53,7 @@ class HomeController extends Controller
             'sliders',
             'featuredProducts',
             'newArrivals',
+            'categories',
             'testimonials',
             'whatsapp',
             'phone',

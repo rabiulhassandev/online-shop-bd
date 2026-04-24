@@ -122,9 +122,9 @@
                         </div>
                         @php $cartCount = app(\App\Services\CartService::class)->count(); @endphp
                         @if($cartCount > 0)
-                            <span id="cart-count-badge" class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-white">{{ $cartCount }}</span>
+                            <span id="cart-count-badge" class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">{{ $cartCount }}</span>
                         @else
-                            <span id="cart-count-badge" class="hidden absolute -right-1 -top-1 h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-white"></span>
+                            <span id="cart-count-badge" class="hidden absolute -right-1 -top-1 h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white"></span>
                         @endif
                     </a>
 
