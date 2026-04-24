@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Models\Division;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
@@ -35,8 +36,9 @@ class CheckoutController extends Controller
         $deliveryCharge = count($items) > 1 ? 0 : $baseDeliveryCharge;
         $total = $subtotal + $deliveryCharge;
         $paymentMethods = $this->enabledPaymentMethods();
+        $divisions = Division::active()->orderBy('name')->get(['id', 'name', 'bn_name']);
 
-        return view('checkout.index', compact('items', 'subtotal', 'deliveryCharge', 'total', 'paymentMethods'));
+        return view('checkout.index', compact('items', 'subtotal', 'deliveryCharge', 'total', 'paymentMethods', 'divisions'));
     }
 
     /**
@@ -64,6 +66,7 @@ class CheckoutController extends Controller
         $deliveryCharge = (float) Setting::get('delivery_charge', 80);
         $total = $subtotal + $deliveryCharge;
         $paymentMethods = $this->enabledPaymentMethods();
+        $divisions = Division::active()->orderBy('name')->get(['id', 'name', 'bn_name']);
 
         // Build a fake single-item array for the view
         $items = [[
@@ -77,7 +80,7 @@ class CheckoutController extends Controller
 
         return view('checkout.index', compact(
             'items', 'subtotal', 'deliveryCharge', 'total', 'paymentMethods',
-            'product', 'size', 'color', 'qty'
+            'product', 'size', 'color', 'qty', 'divisions'
         ));
     }
 

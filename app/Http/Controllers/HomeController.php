@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Setting;
 use App\Models\Slider;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -105,5 +108,35 @@ class HomeController extends Controller
             ->paginate(12);
 
         return view('reviews', compact('reviews'));
+    }
+
+    /**
+     * Get all active divisions for API.
+     */
+    public function getDivisions(): JsonResponse
+    {
+        $divisions = Division::active()->orderBy('name')->get(['id', 'name', 'bn_name']);
+
+        return response()->json($divisions);
+    }
+
+    /**
+     * Get active districts by division for API.
+     */
+    public function getDistrictsByDivision(Division $division): JsonResponse
+    {
+        $districts = $division->districts()->active()->orderBy('name')->get(['id', 'name', 'bn_name']);
+
+        return response()->json($districts);
+    }
+
+    /**
+     * Get active upazilas by district for API.
+     */
+    public function getUpazilasByDistrict(District $district): JsonResponse
+    {
+        $upazilas = $district->upazilas()->active()->orderBy('name')->get(['id', 'name', 'bn_name']);
+
+        return response()->json($upazilas);
     }
 }

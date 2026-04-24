@@ -11,7 +11,7 @@ class OrderService
     /**
      * Create a new order from cart items and checkout data.
      *
-     * @param  array{customer_name: string, phone: string, address: string, note?: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, address: string, note?: string, payment_method: string}  $customerData
      * @param  array<int, array{key: string, product: Product, size: string, color: string, qty: int, unit_price: float, line_total: float}>  $hydratedItems
      */
     public function createFromCart(array $customerData, array $hydratedItems): Order
@@ -35,6 +35,9 @@ class OrderService
         return Order::create([
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
+            'division_id' => $customerData['division_id'],
+            'district_id' => $customerData['district_id'],
+            'upazila_id' => $customerData['upazila_id'],
             'address' => $customerData['address'],
             'note' => $customerData['note'] ?? null,
             'items' => array_values($itemsSnapshot),
@@ -49,7 +52,7 @@ class OrderService
     /**
      * Create a quick "Order Now" order for a single product.
      *
-     * @param  array{customer_name: string, phone: string, address: string, note?: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, address: string, note?: string, payment_method: string}  $customerData
      */
     public function createSingleProduct(
         array $customerData,
@@ -69,6 +72,9 @@ class OrderService
         return Order::create([
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
+            'division_id' => $customerData['division_id'],
+            'district_id' => $customerData['district_id'],
+            'upazila_id' => $customerData['upazila_id'],
             'address' => $customerData['address'],
             'note' => $customerData['note'] ?? null,
             'items' => [[

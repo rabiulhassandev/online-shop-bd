@@ -53,6 +53,13 @@ Route::middleware('maintenance')->group(function (): void {
 
     // Customer Reviews
     Route::get('/reviews', [HomeController::class, 'reviews'])->name('reviews.index');
+
+    // Location API
+    Route::prefix('api')->name('api.')->group(function (): void {
+        Route::get('/divisions', [HomeController::class, 'getDivisions'])->name('divisions');
+        Route::get('/districts/by-division/{division}', [HomeController::class, 'getDistrictsByDivision'])->name('districts.by-division');
+        Route::get('/upazilas/by-district/{district}', [HomeController::class, 'getUpazilasByDistrict'])->name('upazilas.by-district');
+    });
 });
 
 /*
@@ -97,6 +104,14 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
 
     // Categories
     Route::resource('categories', Admin\CategoryController::class);
+
+    // Locations
+    Route::resource('divisions', Admin\DivisionController::class);
+    Route::resource('districts', Admin\DistrictController::class);
+    Route::resource('upazilas', Admin\UpazilaController::class);
+
+    // API for dynamic loading
+    Route::get('/api/districts/by-division/{division}', [Admin\DistrictController::class, 'getByDivision'])->name('api.districts.by-division');
 
     // Discounts
     Route::prefix('discounts')->name('discounts.')->group(function (): void {

@@ -17,7 +17,43 @@
             <input type="hidden" name="qty" value="{{ $qty ?? 1 }}">
         @endisset
 
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-8" x-data="{
+            districts: [],
+            upazilas: [],
+            selectedDivision: '{{ old('division_id') ?? '' }}',
+            selectedDistrict: '{{ old('district_id') ?? '' }}',
+            selectedUpazila: '{{ old('upazila_id') ?? '' }}',
+            loadDistricts(divisionId) {
+                if (!divisionId) {
+                    this.districts = [];
+                    this.selectedDistrict = '';
+                    this.upazilas = [];
+                    this.selectedUpazila = '';
+                    return;
+                }
+                fetch(`{{ route('api.districts.by-division', ':id') }}`.replace(':id', divisionId))
+                    .then(response => response.json())
+                    .then(data => {
+                        this.districts = data;
+                        this.upazilas = [];
+                        this.selectedUpazila = '';
+                    })
+                    .catch(error => console.error('Error loading districts:', error));
+            },
+            loadUpazilas(districtId) {
+                if (!districtId) {
+                    this.upazilas = [];
+                    this.selectedUpazila = '';
+                    return;
+                }
+                fetch(`{{ route('api.upazilas.by-district', ':id') }}`.replace(':id', districtId))
+                    .then(response => response.json())
+                    .then(data => {
+                        this.upazilas = data;
+                    })
+                    .catch(error => console.error('Error loading upazilas:', error));
+            }
+        }" x-init="$nextTick(() => { if(selectedDivision) loadDistricts(selectedDivision); if(selectedDistrict) loadUpazilas(selectedDistrict); })">
 
             {{-- Checkout Form --}}
             <div class="flex-1">
@@ -32,7 +68,7 @@
                         </div>
                     @endif
 
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="customer_name" class="block text-sm font-medium text-gray-700 mb-1">পূর্ণ নাম *</label>
                             <input type="text" id="customer_name" name="customer_name" value="{{ old('customer_name') }}" required
@@ -47,20 +83,65 @@
                                    placeholder="01XXXXXXXXX">
                         </div>
 
+                        {{-- Division --}}
                         <div>
+                            <label for="division_id" class="block text-sm font-medium text-gray-700 mb-1">বিভাগ *</label>
+                            <select id="division_id" name="division_id" required
+                                    x-model="selectedDivision"
+                                    @change="loadDistricts($event.target.value)"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow">
+                                <option value="">বিভাগ নির্বাচন করুন</option>
+                                @foreach($divisions as $division)
+                                    <option value="{{ $division->id }}">{{ $division->bn_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- District --}}
+                        <div>
+                            <label for="district_id" class="block text-sm font-medium text-gray-700 mb-1">জেলা *</label>
+                            <select id="district_id" name="district_id" required
+                                    x-model="selectedDistrict"
+                                    :disabled="!selectedDivision || districts.length === 0"
+                                    @change="loadUpazilas($event.target.value)"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow disabled:bg-gray-100">
+                                <option value="">জেলা নির্বাচন করুন</option>
+                                <template x-for="district in districts" :key="district.id">
+                                    <option :value="district.id" x-text="district.bn_name"></option>
+                                </template>
+                            </select>
+                            <p x-show="selectedDivision && districts.length === 0" class="text-xs text-gray-400 mt-1">এই বিভাগে কোনো জেলা নেই</p>
+                        </div>
+
+                        {{-- Upazila --}}
+                        <div>
+                            <label for="upazila_id" class="block text-sm font-medium text-gray-700 mb-1">উপজেলা *</label>
+                            <select id="upazila_id" name="upazila_id" required
+                                    x-model="selectedUpazila"
+                                    :disabled="!selectedDistrict || upazilas.length === 0"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow disabled:bg-gray-100">
+                                <option value="">উপজেলা নির্বাচন করুন</option>
+                                <template x-for="upazila in upazilas" :key="upazila.id">
+                                    <option :value="upazila.id" x-text="upazila.bn_name"></option>
+                                </template>
+                            </select>
+                            <p x-show="selectedDistrict && upazilas.length === 0" class="text-xs text-gray-400 mt-1">এই জেলায় কোনো উপজেলা নেই</p>
+                        </div>
+
+                        <div class="md:col-span-2">
                             <label for="address" class="block text-sm font-medium text-gray-700 mb-1">ডেলিভারি ঠিকানা *</label>
                             <textarea id="address" name="address" rows="3" required
                                       class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow resize-none"
                                       placeholder="বাড়ি নং, রোড, এলাকা, জেলা...">{{ old('address') }}</textarea>
                         </div>
 
-                        <div>
-                            <label for="note" class="block text-sm font-medium text-gray-700 mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
-                            <textarea id="note" name="note" rows="2" maxlength="500"
-                                      class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow resize-none"
-                                      placeholder="অন্য কোনো তথ্য থাকলে লিখুন...">{{ old('note') }}</textarea>
-                            <p class="text-xs text-gray-400 mt-1">সর্বোচ্চ ৫০০ অক্ষর</p>
-                        </div>
+                    </div>
+                    <div>
+                        <label for="note" class="block text-sm font-medium text-gray-700 mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
+                        <textarea id="note" name="note" rows="2" maxlength="500"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow resize-none"
+                                    placeholder="অন্য কোনো তথ্য থাকলে লিখুন...">{{ old('note') }}</textarea>
+                        <p class="text-xs text-gray-400 mt-1">সর্বোচ্চ ৫০০ অক্ষর</p>
                     </div>
                 </div>
 
