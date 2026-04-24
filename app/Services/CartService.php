@@ -59,6 +59,44 @@ class CartService
     }
 
     /**
+     * Update size and/or color for a specific cart item.
+     */
+    public function updateAttributes(string $key, ?string $newSize = null, ?string $newColor = null): void
+    {
+        $items = $this->getItems();
+
+        if (! isset($items[$key])) {
+            return;
+        }
+
+        $item = $items[$key];
+        $size = $newSize ?? $item['size'];
+        $color = $newColor ?? $item['color'];
+        $qty = $item['qty'];
+        $productId = $item['product_id'];
+
+        // Remove old item
+        unset($items[$key]);
+
+        // Add with new attributes
+        $newKey = $this->itemKey($productId, $size, $color);
+
+        if (isset($items[$newKey])) {
+            // Merge quantity if item with new attributes already exists
+            $items[$newKey]['qty'] += $qty;
+        } else {
+            $items[$newKey] = [
+                'product_id' => $productId,
+                'size' => $size,
+                'color' => $color,
+                'qty' => $qty,
+            ];
+        }
+
+        Session::put(self::SESSION_KEY, $items);
+    }
+
+    /**
      * Remove a specific item from cart by key.
      */
     public function remove(string $key): void
@@ -107,7 +145,7 @@ class CartService
 
         $productIds = array_unique(array_column($items, 'product_id'));
         $products = Product::whereIn('id', $productIds)
-            ->select(['id', 'name', 'slug', 'images', 'price', 'discounted_price', 'discount_start_at', 'discount_end_at'])
+            ->select(['id', 'name', 'slug', 'images', 'price', 'discounted_price', 'discount_start_at', 'discount_end_at', 'sizes', 'colors'])
             ->get()
             ->keyBy('id');
 

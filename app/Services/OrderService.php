@@ -11,7 +11,7 @@ class OrderService
     /**
      * Create a new order from cart items and checkout data.
      *
-     * @param  array{customer_name: string, phone: string, address: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, address: string, note?: string, payment_method: string}  $customerData
      * @param  array<int, array{key: string, product: Product, size: string, color: string, qty: int, unit_price: float, line_total: float}>  $hydratedItems
      */
     public function createFromCart(array $customerData, array $hydratedItems): Order
@@ -36,6 +36,7 @@ class OrderService
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
             'address' => $customerData['address'],
+            'note' => $customerData['note'] ?? null,
             'items' => array_values($itemsSnapshot),
             'subtotal' => $subtotal,
             'delivery_charge' => $deliveryCharge,
@@ -48,7 +49,7 @@ class OrderService
     /**
      * Create a quick "Order Now" order for a single product.
      *
-     * @param  array{customer_name: string, phone: string, address: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, address: string, note?: string, payment_method: string}  $customerData
      */
     public function createSingleProduct(
         array $customerData,
@@ -69,6 +70,7 @@ class OrderService
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
             'address' => $customerData['address'],
+            'note' => $customerData['note'] ?? null,
             'items' => [[
                 'product_id' => $product->id,
                 'product_name' => $product->name,

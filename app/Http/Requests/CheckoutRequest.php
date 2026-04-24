@@ -23,6 +23,7 @@ class CheckoutRequest extends FormRequest
             'customer_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:1000'],
+            'note' => ['nullable', 'string', 'max:500'],
             'payment_method' => ['required', 'in:cod,bkash,nagad'],
         ];
     }

@@ -26,6 +26,9 @@
                 <div class="flex justify-between"><dt class="text-gray-500">নাম</dt><dd class="text-gray-800 font-medium">{{ $order->customer_name }}</dd></div>
                 <div class="flex justify-between"><dt class="text-gray-500">ফোন</dt><dd class="text-gray-800">{{ $order->phone }}</dd></div>
                 <div><dt class="text-gray-500 mb-1">ঠিকানা</dt><dd class="text-gray-800">{{ $order->address }}</dd></div>
+                @if($order->note)
+                    <div><dt class="text-gray-500 mb-1">নোট</dt><dd class="text-gray-800 bg-gray-50 rounded-lg px-3 py-2">{{ $order->note }}</dd></div>
+                @endif
             </dl>
         </div>
     </div>

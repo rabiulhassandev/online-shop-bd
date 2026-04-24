@@ -28,6 +28,7 @@ Route::middleware('maintenance')->group(function (): void {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/add', [CartController::class, 'add'])->name('add');
         Route::patch('/update/{key}', [CartController::class, 'update'])->name('update');
+        Route::patch('/update-attributes/{key}', [CartController::class, 'updateAttributes'])->name('update-attributes');
         Route::delete('/remove/{key}', [CartController::class, 'remove'])->name('remove');
         Route::get('/count', [CartController::class, 'count'])->name('count');
     });

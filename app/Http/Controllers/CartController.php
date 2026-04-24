@@ -60,6 +60,25 @@ class CartController extends Controller
     }
 
     /**
+     * Update size and/or color of a cart item.
+     */
+    public function updateAttributes(Request $request, string $key): RedirectResponse
+    {
+        $request->validate([
+            'size' => ['required', 'string'],
+            'color' => ['nullable', 'string'],
+        ]);
+
+        $this->cartService->updateAttributes(
+            key: $key,
+            newSize: $request->size,
+            newColor: $request->string('color', ''),
+        );
+
+        return back()->with('success', 'কার্ট আপডেট হয়েছে।');
+    }
+
+    /**
      * Remove a specific item from the cart.
      */
     public function remove(string $key): RedirectResponse

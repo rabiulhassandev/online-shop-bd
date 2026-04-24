@@ -46,6 +46,9 @@
             <div><p class="text-gray-400 text-xs mb-0.5">নাম</p><p class="font-medium text-gray-900">{{ $order->customer_name }}</p></div>
             <div><p class="text-gray-400 text-xs mb-0.5">ফোন</p><p class="font-medium text-gray-900">{{ $order->phone }}</p></div>
             <div class="col-span-2"><p class="text-gray-400 text-xs mb-0.5">ঠিকানা</p><p class="font-medium text-gray-900">{{ $order->address }}</p></div>
+            @if($order->note)
+                <div class="col-span-2"><p class="text-gray-400 text-xs mb-0.5">নোট</p><p class="font-medium text-gray-900 bg-gray-50 rounded-lg px-3 py-2">{{ $order->note }}</p></div>
+            @endif
             <div><p class="text-gray-400 text-xs mb-0.5">পেমেন্ট</p><p class="font-medium text-gray-900 uppercase">{{ $order->payment_method }}</p></div>
             <div><p class="text-gray-400 text-xs mb-0.5">স্ট্যাটাস</p><span class="inline-block bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-0.5 rounded-full">Pending</span></div>
         </div>

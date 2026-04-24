@@ -53,6 +53,14 @@
                                       class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow resize-none"
                                       placeholder="বাড়ি নং, রোড, এলাকা, জেলা...">{{ old('address') }}</textarea>
                         </div>
+
+                        <div>
+                            <label for="note" class="block text-sm font-medium text-gray-700 mb-1">অর্ডার নোট (ঐচ্ছিক)</label>
+                            <textarea id="note" name="note" rows="2" maxlength="500"
+                                      class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow resize-none"
+                                      placeholder="অন্য কোনো তথ্য থাকলে লিখুন...">{{ old('note') }}</textarea>
+                            <p class="text-xs text-gray-400 mt-1">সর্বোচ্চ ৫০০ অক্ষর</p>
+                        </div>
                     </div>
                 </div>
 
