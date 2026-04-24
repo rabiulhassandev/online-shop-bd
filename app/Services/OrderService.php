@@ -16,7 +16,8 @@ class OrderService
      */
     public function createFromCart(array $customerData, array $hydratedItems): Order
     {
-        $deliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $baseDeliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $deliveryCharge = count($hydratedItems) > 1 ? 0 : $baseDeliveryCharge;
         $subtotal = (float) array_sum(array_column($hydratedItems, 'line_total'));
         $total = $subtotal + $deliveryCharge;
 

@@ -31,7 +31,8 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $this->cartService->subtotal();
-        $deliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $baseDeliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $deliveryCharge = count($items) > 1 ? 0 : $baseDeliveryCharge;
         $total = $subtotal + $deliveryCharge;
         $paymentMethods = $this->enabledPaymentMethods();
 

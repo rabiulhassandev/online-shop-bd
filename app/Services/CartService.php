@@ -85,6 +85,14 @@ class CartService
     }
 
     /**
+     * Get number of unique items in the cart.
+     */
+    public function uniqueCount(): int
+    {
+        return count($this->getItems());
+    }
+
+    /**
      * Get cart items hydrated with product data.
      *
      * @return array<int, array{key: string, product: Product, size: string, color: string, qty: int, unit_price: float, line_total: float}>

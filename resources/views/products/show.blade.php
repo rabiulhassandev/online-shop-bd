@@ -90,7 +90,7 @@
 
             <!-- add alert -->
             <div class="bg-amber-100 border border-amber-400 text-amber-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <strong class="font-bold">অফার নিশ্চিত করুন!</strong>
+                <strong class="font-bold">অফার নিশ্চিত করুন!</strong> <br>
                 <span class="block sm:inline">{{ \App\Models\Setting::get('product_promo_text', 'এই পণ্যটির উপর প্রযোজ্য অফার আছে।') }}</span>
             </div>
 
@@ -164,24 +164,25 @@
                     <input type="hidden" name="color" :value="selectedColor">
                     <input type="hidden" name="qty" :value="qty">
                     <button type="submit"
-                            class="w-full py-3 px-6 rounded-xl border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all duration-200">
+                            :disabled="!selectedSize && sizes.length > 0"
+                            :class="(!selectedSize && sizes.length > 0) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-900 hover:text-white'"
+                            class="w-full py-3 px-6 rounded-xl border-2 border-gray-900 text-gray-900 font-semibold transition-all duration-200">
                         🛒 কার্টে যোগ করুন
                     </button>
                 </form>
 
                 {{-- Order Now --}}
-                <form action="{{ route('checkout.store-order-now') }}" method="POST" class="flex-1">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <input type="hidden" name="size" :value="selectedSize">
-                    <input type="hidden" name="color" :value="selectedColor">
-                    <input type="hidden" name="qty" :value="qty">
-                    <button type="submit"
-                            class="w-full py-3 px-6 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold transition-all duration-200 shadow-md hover:shadow-lg">
-                        ⚡ এখনই অর্ডার করুন
-                    </button>
-                </form>
+                <a :href="selectedSize ? '{{ route('checkout.order-now') }}?product_id={{ $product->id }}&size=' + selectedSize + '&color=' + selectedColor + '&qty=' + qty : 'javascript:void(0)'"
+                   :class="(!selectedSize && sizes.length > 0) ? 'opacity-50 cursor-not-allowed bg-amber-400' : 'hover:bg-amber-600'"
+                   class="flex-1 py-3 px-6 rounded-xl bg-amber-500 text-white font-semibold text-center transition-all duration-200 shadow-md hover:shadow-lg"
+                   @click="if(!selectedSize && sizes.length > 0) { $el.preventDefault(); }">
+                    ⚡ এখনই অর্ডার করুন
+                </a>
             </div>
+
+            @if(!empty($product->sizes))
+                <p class="text-xs text-gray-400 mt-2 text-center" x-show="!selectedSize">* সাইজ বেছে নিন</p>
+            @endif
 
             <!-- Product Chart Image (public/assets/images/product-chart.jpeg) -->
             <div class="mt-10">

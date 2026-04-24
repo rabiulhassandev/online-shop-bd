@@ -101,8 +101,19 @@
                             <span>সাবটোটাল</span><span>৳{{ number_format($subtotal, 0) }}</span>
                         </div>
                         <div class="flex justify-between text-gray-600">
-                            <span>ডেলিভারি</span><span>৳{{ number_format($deliveryCharge, 0) }}</span>
+                            <span>ডেলিভারি</span>
+                            @if($deliveryCharge === 0)
+                                <span class="text-green-600 font-medium">ফ্রি!</span>
+                            @else
+                                <span>৳{{ number_format($deliveryCharge, 0) }}</span>
+                            @endif
                         </div>
+                        @if($deliveryCharge === 0 && count($items) > 1)
+                            <p class="text-xs text-green-600 flex items-center gap-1">
+                                <i class='bx bxs-gift text-sm'></i>
+                                {{ count($items) }}টি পণ্যের জন্য ফ্রি ডেলিভারি!
+                            </p>
+                        @endif
                         <div class="border-t border-gray-100 pt-2 flex justify-between font-bold text-gray-900 text-base">
                             <span>মোট</span><span>৳{{ number_format($total, 0) }}</span>
                         </div>
