@@ -94,6 +94,9 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
         Route::patch('/{order}/status', [Admin\OrderController::class, 'updateStatus'])->name('update-status');
     });
 
+    // Categories
+    Route::resource('categories', Admin\CategoryController::class);
+
     // Discounts
     Route::prefix('discounts')->name('discounts.')->group(function (): void {
         Route::get('/', [Admin\DiscountController::class, 'index'])->name('index');

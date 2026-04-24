@@ -47,19 +47,70 @@
                         <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                     @else
                         <div>
-                            <div class="text-2xl font-bold tracking-tight text-white">কাতুয়া <span class="text-red-500">শার্ট</span></div>
+                            <div class="text-2xl font-bold tracking-tight text-white">কাতুয়া <span class="text-amber-500">শার্ট</span></div>
                             <div class="text-xs text-white">প্রিমিয়াম শার্ট ব্র্যান্ড</div>
                         </div>
                     @endif
                 </a>
 
                 {{-- Desktop Navigation Links --}}
-                <div class="hidden lg:flex items-center gap-8">
+                <div class="hidden lg:flex items-center gap-8 relative z-50">
                     <a href="{{ route('home') }}" class="border-b-2 pb-1  text-md transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-white' : 'border-transparent text-white hover:text-amber-500' }}">হোম</a>
-                    <a href="{{ route('about') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('about') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
-                    <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">সব পণ্য</a>
-                    <a href="{{ route('reviews.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('reviews.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">রিভিউ</a>
-                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1   text-md text-white transition-colors hover:text-amber-500">যোগাযোগ</a>
+                    <a href="{{ route('about') }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('about') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
+                    
+                    {{-- Products Dropdown --}}
+                    <div class="relative group py-4 -my-4">
+                        <a href="{{ route('products.index') }}" class="border-b-2 pb-1 text-md transition-colors flex items-center gap-1 {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500 group-hover:border-amber-500 group-hover:text-amber-500' }}">
+                            সব পণ্য <i class='bx bx-chevron-down mt-1 transition-transform group-hover:rotate-180'></i>
+                        </a>
+                        
+                        {{-- Dropdown Menu Container --}}
+                        <div class="absolute left-0 top-full pt-4 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50">
+                            
+                            {{-- Dropdown Card --}}
+                            <div class="relative rounded-lg bg-white shadow-xl ring-1 ring-gray-900/5">
+                                {{-- Top Pointer --}}
+                                <div class="absolute -top-2 left-6 w-4 h-4 bg-white border-l border-t border-gray-900/5 rotate-45"></div>
+
+                                @php
+                                    $categories = \App\Models\Category::whereNull('parent_id')->where('is_active', true)->with(['children' => function($q) {
+                                        $q->where('is_active', true)->orderBy('sort_order');
+                                    }])->orderBy('sort_order')->get();
+                                @endphp
+                                
+                                <div class="p-2 relative bg-white rounded-lg">
+                                    @forelse($categories as $category)
+                                        <div class="relative group/sub">
+                                            <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="px-4 py-2.5 text-[15px] font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-amber-600 transition-colors {{ $category->children->count() > 0 ? 'flex justify-between items-center' : 'block' }}">
+                                                {{ $category->name }}
+                                                @if($category->children->count() > 0)
+                                                    <i class='bx bx-chevron-right text-gray-400 group-hover/sub:text-amber-500 transition-transform group-hover/sub:translate-x-1'></i>
+                                                @endif
+                                            </a>
+                                            
+                                            {{-- Subcategories Container --}}
+                                            @if($category->children->count() > 0)
+                                            <div class="absolute left-full top-0 pl-1 w-56 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 transform -translate-x-1 group-hover/sub:translate-x-0 z-50">
+                                                <div class="rounded-lg bg-white shadow-xl ring-1 ring-gray-900/5 p-2">
+                                                    @foreach($category->children as $child)
+                                                        <a href="{{ route('products.index', ['category' => $child->slug]) }}" class="block px-4 py-2 text-sm text-gray-600 rounded-md hover:bg-gray-50 hover:text-amber-600 transition-colors">
+                                                            {{ $child->name }}
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    @empty
+                                        <div class="px-4 py-4 text-sm text-gray-500 text-center">কোনো ক্যাটাগরি নেই</div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('reviews.index') }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('reviews.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">রিভিউ</a>
+                    <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1 text-md text-white transition-colors hover:text-amber-500">যোগাযোগ</a>
                 </div>
 
                 {{-- Actions --}}
@@ -90,12 +141,58 @@
 
     {{-- Mobile menu --}}
     <div id="mobile-menu" class="hidden border-t border-gray-100 bg-gray-900 py-4 lg:hidden">
-        <div class="max-w-7xl mx-auto space-y-3 px-4 sm:px-6">
-            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">হোম</a>
+        <div class="max-w-7xl mx-auto space-y-1 px-4 sm:px-6">
+            <a href="{{ route('home') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">হোম</a>
             <a href="{{ route('about') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">আমাদের সম্পর্কে</a>
-            <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">সব পণ্য</a>
+            
+            {{-- Mobile Products --}}
+            <div x-data="{ open: false }">
+                <div class="flex items-center justify-between">
+                    <a href="{{ route('products.index') }}" class="block flex-1 rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">সব পণ্য</a>
+                    <button @click="open = !open" class="p-2 text-gray-300 hover:text-white">
+                        <svg class="w-5 h-5 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+                
+                <div x-show="open" class="pl-4 pr-2 py-1 space-y-1 border-l border-gray-700 ml-2 mt-1">
+                    @php
+                        if (!isset($categories)) {
+                            $categories = \App\Models\Category::whereNull('parent_id')->where('is_active', true)->with(['children' => function($q) {
+                                $q->where('is_active', true)->orderBy('sort_order');
+                            }])->orderBy('sort_order')->get();
+                        }
+                    @endphp
+                    @forelse($categories as $category)
+                        <div x-data="{ subOpen: false }">
+                            <div class="flex items-center justify-between">
+                                <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="block flex-1 rounded-md px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800">
+                                    {{ $category->name }}
+                                </a>
+                                @if($category->children->count() > 0)
+                                    <button @click="subOpen = !subOpen" class="p-2 text-gray-400 hover:text-white">
+                                        <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': subOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                @endif
+                            </div>
+                            
+                            @if($category->children->count() > 0)
+                                <div x-show="subOpen" class="pl-4 py-1 space-y-1 border-l border-gray-700 ml-2 mt-1 mb-1">
+                                    @foreach($category->children as $child)
+                                        <a href="{{ route('products.index', ['category' => $child->slug]) }}" class="block rounded-md px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-gray-800">
+                                            {{ $child->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @empty
+                        <div class="px-3 py-2 text-sm text-gray-500">কোনো ক্যাটাগরি নেই</div>
+                    @endforelse
+                </div>
+            </div>
+
             <a href="{{ route('reviews.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">রিভিউ</a>
-            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">যোগাযোগ</a>
+            <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">যোগাযোগ</a>
         </div>
     </div>
 </header>

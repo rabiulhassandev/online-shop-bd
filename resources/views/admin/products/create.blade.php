@@ -153,6 +153,20 @@ document.querySelectorAll('form').forEach(form => {
             {{-- Sidebar --}}
             <div class="space-y-5">
                 <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <h3 class="font-semibold text-gray-900 mb-4">ক্যাটেগরি</h3>
+                    <select name="category_id"
+                            class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        <option value="">-- কোনো ক্যাটেগরি নেই --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')<span class="text-xs text-red-600 mt-1 block">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                     <h3 class="font-semibold text-gray-900 mb-4">অবস্থা</h3>
                     <div class="space-y-3">
                         @foreach([['name' => 'is_active', 'label' => 'সক্রিয়', 'checked' => true], ['name' => 'is_featured', 'label' => 'ফিচার্ড', 'checked' => false], ['name' => 'is_new_arrival', 'label' => 'নতুন আগমন', 'checked' => false]] as $toggle)

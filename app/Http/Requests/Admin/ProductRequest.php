@@ -26,6 +26,7 @@ class ProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'unique:products,slug'.($productId ? ",{$productId}" : '')],
             'description' => ['nullable', 'string'],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'images.*' => ['nullable', 'image', 'max:2048'],
             'price' => ['required', 'numeric', 'min:0'],
             'discounted_price' => ['nullable', 'numeric', 'min:0', 'lt:price'],

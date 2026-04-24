@@ -20,7 +20,7 @@ class ProductController extends Controller
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('name', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%");
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
             });
         }
 
@@ -35,6 +35,16 @@ class ProductController extends Controller
         // Filter by size availability (JSON contains check)
         if ($request->filled('size')) {
             $query->whereJsonContains('sizes', ['size' => $request->size]);
+        }
+
+        // Filter by category slug
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category)
+                    ->orWhereHas('parent', function ($p) use ($request) {
+                        $p->where('slug', $request->category);
+                    });
+            });
         }
 
         // Sorting

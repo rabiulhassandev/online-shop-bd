@@ -34,6 +34,19 @@
                     <h3 class="font-semibold text-gray-900 mb-4">মূল তথ্য</h3>
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">ক্যাটেগরি</label>
+                            <select name="category_id"
+                                    class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                                <option value="">-- কোনো ক্যাটেগরি নেই --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('category_id')<span class="text-xs text-red-600 mt-1 block">{{ $message }}</span>@enderror
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">পণ্যের নাম *</label>
                             <input type="text" name="name" value="{{ old('name', $product->name) }}" required
                                    class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">

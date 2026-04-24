@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::where('is_active', true)->whereNull('parent_id')->orderBy('sort_order')->get();
+        $categories = Category::where('is_active', true)->orderBy('sort_order')->get();
 
         return view('admin.products.create', compact('categories'));
     }
@@ -60,7 +60,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        $categories = Category::where('is_active', true)->whereNull('parent_id')->orderBy('sort_order')->get();
+        $categories = Category::where('is_active', true)->orderBy('sort_order')->get();
 
         return view('admin.products.edit', compact('product', 'categories'));
     }
