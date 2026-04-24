@@ -58,6 +58,7 @@
                     <a href="{{ route('home') }}" class="border-b-2 pb-1  text-md transition-colors {{ request()->routeIs('home') ? 'border-amber-500 text-white' : 'border-transparent text-white hover:text-amber-500' }}">হোম</a>
                     <a href="{{ route('about') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('about') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">আমাদের সম্পর্কে</a>
                     <a href="{{ route('products.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('products.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">সব পণ্য</a>
+                    <a href="{{ route('reviews.index') }}" class="border-b-2 pb- text-md transition-colors {{ request()->routeIs('reviews.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">রিভিউ</a>
                     <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1   text-md text-white transition-colors hover:text-amber-500">যোগাযোগ</a>
                 </div>
 
@@ -93,6 +94,7 @@
             <a href="{{ route('home') }}" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">হোম</a>
             <a href="{{ route('about') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">আমাদের সম্পর্কে</a>
             <a href="{{ route('products.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">সব পণ্য</a>
+            <a href="{{ route('reviews.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">রিভিউ</a>
             <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2   text-md text-white hover:text-amber-500 hover:bg-white">যোগাযোগ</a>
         </div>
     </div>

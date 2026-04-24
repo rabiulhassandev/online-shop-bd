@@ -84,4 +84,17 @@ class HomeController extends Controller
 
         return view('return-policy', compact('content', 'siteName'));
     }
+
+    /**
+     * Show all approved customer reviews.
+     */
+    public function reviews(): View
+    {
+        $reviews = Review::approved()
+            ->with('product:id,name,slug')
+            ->latest()
+            ->paginate(12);
+
+        return view('reviews', compact('reviews'));
+    }
 }

@@ -49,6 +49,9 @@ Route::middleware('maintenance')->group(function (): void {
 
     // Return Policy
     Route::get('/return-policy', [HomeController::class, 'returnPolicy'])->name('return-policy');
+
+    // Customer Reviews
+    Route::get('/reviews', [HomeController::class, 'reviews'])->name('reviews.index');
 });
 
 /*
