@@ -8,12 +8,24 @@
 
     {{-- Page Header --}}
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">সব পণ্য</h1>
+        <h1 class="text-3xl font-bold text-gray-900">
+            @if(request('listing') === 'hot')
+                হট সেলিং প্রোডাক্ট
+            @elseif(request('listing') === 'discount')
+                ডিসকাউন্ট প্রোডাক্ট
+            @else
+                সব পণ্য
+            @endif
+        </h1>
         <p class="text-gray-500 mt-1">{{ $products->total() }}টি পণ্য পাওয়া গেছে</p>
     </div>
 
     {{-- Filters --}}
     <form method="GET" action="{{ route('products.index') }}" class="bg-white border border-gray-200 rounded-xl p-4 mb-8 flex flex-wrap gap-4 items-end">
+        @if(request()->filled('listing'))
+            <input type="hidden" name="listing" value="{{ request('listing') }}">
+        @endif
+
         <div class="flex-1 min-w-48">
             <label class="block text-xs font-medium text-gray-600 mb-1">ক্যাটাগরি</label>
             <select name="category" class="w-full border border-gray-300 rounded-lg text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
@@ -60,8 +72,8 @@
         </div>
 
         <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors">ফিল্টার করুন</button>
-        @if(request()->hasAny(['category','size','min_price','max_price','sort']))
-            <a href="{{ route('products.index') }}" class="text-sm text-gray-500 hover:text-red-500 py-2">রিসেট</a>
+        @if(request()->hasAny(['listing', 'category', 'size', 'min_price', 'max_price', 'sort']))
+            <a href="{{ route('products.index', request()->filled('listing') ? ['listing' => request('listing')] : []) }}" class="text-sm text-gray-500 hover:text-red-500 py-2">রিসেট</a>
         @endif
     </form>
 

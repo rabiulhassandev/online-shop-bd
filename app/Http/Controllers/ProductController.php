@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,6 +16,7 @@ class ProductController extends Controller
     public function index(Request $request): View
     {
         $query = Product::active();
+        $listing = $request->string('listing')->toString();
 
         // Search by name or description
         if ($request->filled('search')) {
@@ -48,14 +50,59 @@ class ProductController extends Controller
             });
         }
 
-        // Sorting
-        $sort = $request->get('sort', 'newest');
-        match ($sort) {
-            'price_asc' => $query->orderBy('price'),
-            'price_desc' => $query->orderByDesc('price'),
-            'discount' => $query->orderByDesc('discounted_price'),
-            default => $query->latest(),
-        };
+        if ($listing === 'hot') {
+            $soldQuantities = [];
+            $orderItems = Order::query()
+                ->where('status', '!=', 'cancelled')
+                ->pluck('items');
+
+            foreach ($orderItems as $items) {
+                foreach ($items as $item) {
+                    if (! isset($item['product_id'])) {
+                        continue;
+                    }
+
+                    $productId = (int) $item['product_id'];
+                    $quantity = (int) ($item['qty'] ?? 0);
+                    $soldQuantities[$productId] = ($soldQuantities[$productId] ?? 0) + $quantity;
+                }
+            }
+
+            arsort($soldQuantities);
+            $productIds = array_keys($soldQuantities);
+
+            if (empty($productIds)) {
+                $query->whereRaw('1 = 0');
+            } else {
+                $orderedIds = implode(',', $productIds);
+                $query->whereIn('id', $productIds)
+                    ->orderByRaw("FIELD(id, {$orderedIds})");
+            }
+        } else {
+            if ($listing === 'discount') {
+                $now = now();
+                $query->whereNotNull('discounted_price')
+                    ->whereColumn('discounted_price', '<', 'price')
+                    ->where(function ($q) use ($now) {
+                        $q->whereNull('discount_start_at')
+                            ->orWhere('discount_start_at', '<=', $now);
+                    })
+                    ->where(function ($q) use ($now) {
+                        $q->whereNull('discount_end_at')
+                            ->orWhere('discount_end_at', '>=', $now);
+                    })
+                    ->orderByRaw('((price - discounted_price) / price) DESC');
+            }
+
+            // Sorting
+            $sort = $request->get('sort', 'newest');
+            match ($sort) {
+                'price_asc' => $query->orderBy('price'),
+                'price_desc' => $query->orderByDesc('price'),
+                'discount' => $query->orderByDesc('discounted_price'),
+                default => $query->latest(),
+            };
+        }
 
         $products = $query->with('category')->paginate(10)->withQueryString();
 
