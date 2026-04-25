@@ -135,6 +135,14 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Display the invoice for download/print.
+     */
+    public function invoice(Order $order): View
+    {
+        return view('checkout.invoice', compact('order'));
+    }
+
+    /**
      * Get enabled payment methods from settings.
      *
      * @return array<string, string>

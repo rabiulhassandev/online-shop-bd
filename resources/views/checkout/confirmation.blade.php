@@ -11,7 +11,7 @@
         </svg>
     </div>
 
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">অর্ডার সফল হয়েছে! 🎉</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">অর্ডার সফল হয়েছে! ☺️</h1>
     <p class="text-gray-500 mb-1">আপনার অর্ডার নম্বর:</p>
     <div class="inline-block bg-amber-50 border border-amber-200 text-amber-700 font-mono font-bold text-xl px-6 py-3 rounded-xl mb-8">
         {{ $order->order_number }}
@@ -56,9 +56,16 @@
 
     <p class="text-sm text-gray-500 mb-6">আমরা শীঘ্রই আপনাকে কল করে অর্ডার নিশ্চিত করব।</p>
 
-    <a href="{{ route('products.index') }}"
-       class="inline-block bg-gray-900 hover:bg-gray-700 text-white font-semibold px-8 py-3 rounded-full transition-colors">
-        কেনাকাটা চালিয়ে যান
-    </a>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="{{ route('checkout.invoice', $order->id) }}"
+           target="_blank"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-full transition-colors">
+            📥 ইনভয়েস ডাউনলোড
+        </a>
+        <a href="{{ route('products.index') }}"
+           class="inline-block bg-gray-900 hover:bg-gray-700 text-white font-semibold px-8 py-3 rounded-full transition-colors">
+            কেনাকাটা চালিয়ে যান
+        </a>
+    </div>
 </div>
 @endsection

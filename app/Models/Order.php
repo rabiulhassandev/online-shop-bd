@@ -66,12 +66,12 @@ class Order extends Model
     }
 
     /**
-     * Generate a unique order number in KS-YYYY-XXXX format.
+     * Generate a unique order number in MS-2097-XXXX format.
      */
     public static function generateOrderNumber(): string
     {
         $year = now()->year;
-        $prefix = "KS-{$year}-";
+        $prefix = "MS-2097-";
 
         $lastOrder = static::where('order_number', 'like', "{$prefix}%")
             ->orderByDesc('id')

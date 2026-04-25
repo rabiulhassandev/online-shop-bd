@@ -40,6 +40,7 @@ Route::middleware('maintenance')->group(function (): void {
         Route::get('/order-now', [CheckoutController::class, 'orderNow'])->name('order-now');
         Route::post('/order-now', [CheckoutController::class, 'storeOrderNow'])->name('store-order-now');
         Route::get('/confirmation/{order}', [CheckoutController::class, 'confirmation'])->name('confirmation');
+        Route::get('/invoice/{order}', [CheckoutController::class, 'invoice'])->name('invoice');
     });
 
     // About Us
