@@ -11,7 +11,7 @@
 <body class="min-h-screen bg-gray-900 flex items-center justify-center px-4">
     <div class="w-full max-w-md">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-black">কাতুয়া <span class="text-amber-400">শার্ট</span></h1>
+            <h1 class="text-3xl font-bold text-black">Men's <span class="text-amber-400">Signature</span></h1>
             <p class="text-gray-400 mt-1 text-sm">অ্যাডমিন প্যানেল</p>
         </div>
 
@@ -50,7 +50,9 @@
             </form>
         </div>
 
-        <p class="text-center text-xs text-gray-500 mt-6">© {{ date('Y') }} কাতুয়া শার্ট</p>
+        <div class="border-t border-gray-800 mt-10 pt-6 text-center text-xs text-gray-500">
+            &copy; {{ date('Y') }} Men's Signature | All rights reserved.
+        </div>
     </div>
 </body>
 </html>

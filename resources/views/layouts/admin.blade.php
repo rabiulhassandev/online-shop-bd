@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin') | কাতুয়া শার্ট অ্যাডমিন</title>
+    <title>@yield('title', 'Admin') | Men's Signature অ্যাডমিন</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -25,7 +25,7 @@
         {{-- Logo --}}
         <div class="flex items-center justify-between h-16 px-6 border-b border-gray-700">
             <a href="{{ route('admin.dashboard') }}" class="text-white font-bold text-lg">
-                কাতুয়া <span class="text-amber-400">অ্যাডমিন</span>
+                অ্যাডমিন <span class="text-amber-400">প্যানেল</span>
             </a>
             <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>

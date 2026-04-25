@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', 'কাতুয়া শার্ট — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।')">
-    <title>@yield('title', 'কাতুয়া শার্ট') | প্রিমিয়াম শার্ট ব্র্যান্ড</title>
+    <meta name="description" content="@yield('meta_description', 'Mens Signature — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।')">
+    <meta name="keywords" content="@yield('meta_keywords', 'Mens Signature, পাঞ্জাবি, শার্ট, পুরুষদের শার্ট, প্রিমিয়াম শার্ট, কাতুয়া শার্ট, বাংলাদেশ, অনলাইন শার্ট শপ')">
+    <title>@yield('title', 'Mens Signature') | প্রিমিয়াম শার্ট ব্র্যান্ড</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-    {{-- Icon --}}
+    {{-- Icon library --}}
     <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,8 +48,8 @@
                         <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                     @else
                         <div>
-                            <div class="text-2xl font-bold tracking-tight text-white">কাতুয়া <span class="text-amber-500">শার্ট</span></div>
-                            <div class="text-xs text-white">প্রিমিয়াম শার্ট ব্র্যান্ড</div>
+                            <div class="text-2xl font-bold tracking-tight text-white">Men's <span class="text-amber-500">Signature</span></div>
+                            <div class="text-xs text-white">Your Style, Your Signature</div>
                         </div>
                     @endif
                 </a>
@@ -235,7 +236,7 @@
                 @if(\App\Models\Setting::get('site_logo') != 0)
                     <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                 @else
-                <h3 class="text-white text-xl font-bold mb-3">কাতুয়া <span class="text-amber-400">শার্ট</span></h3>
+                <h3 class="text-white text-xl font-bold mb-3">Men's <span class="text-amber-400">Signature</span></h3>
                 @endif
                 <p class="text-sm text-gray-400 leading-relaxed space-y-2">Your Style, Your Signature</p>
             </div>
