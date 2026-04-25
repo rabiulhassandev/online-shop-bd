@@ -111,8 +111,8 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('products.index', ['listing' => 'hot']) }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('products.*') && request('listing') === 'hot' ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">হট সেলিং প্রোডাক্ট</a>
-                    <a href="{{ route('products.index', ['listing' => 'discount']) }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('products.*') && request('listing') === 'discount' ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">অফার প্রোডাক্ট</a>
+                    <a href="{{ route('products.index', ['listing' => 'hot']) }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('products.*') && request('listing') === 'hot' ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">বেস্ট সেলিং</a>
+                    <a href="{{ route('products.index', ['listing' => 'discount']) }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('products.*') && request('listing') === 'discount' ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">চলমান অফার</a>
                     <a href="{{ route('reviews.index') }}" class="border-b-2 pb-1 text-md transition-colors {{ request()->routeIs('reviews.*') ? 'border-amber-500 text-amber-500' : 'border-transparent text-white hover:text-amber-500' }}">রিভিউ</a>
                     <a href="{{ route('home') }}#contact" class="border-b-2 border-transparent pb-1 text-md text-white transition-colors hover:text-amber-500">যোগাযোগ</a>
                 </div>
@@ -195,8 +195,8 @@
                 </div>
             </div>
 
-            <a href="{{ route('products.index', ['listing' => 'hot']) }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">হট সেলিং</a>
-            <a href="{{ route('products.index', ['listing' => 'discount']) }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">অফার</a>
+            <a href="{{ route('products.index', ['listing' => 'hot']) }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">বেস্ট সেলিং</a>
+            <a href="{{ route('products.index', ['listing' => 'discount']) }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">চলমান অফার</a>
             <a href="{{ route('reviews.index') }}" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">রিভিউ</a>
             <a href="{{ route('home') }}#contact" class="block rounded-md px-3 py-2 text-md text-white hover:text-amber-500 hover:bg-white">যোগাযোগ</a>
         </div>
