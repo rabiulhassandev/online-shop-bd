@@ -29,7 +29,7 @@
                      class="w-14 h-14 rounded-xl object-cover bg-gray-50 shrink-0">
                 <div class="flex-1 min-w-0">
                     <p class="font-medium text-sm text-gray-900 line-clamp-1">{{ $item['product_name'] }}</p>
-                    <p class="text-xs text-gray-400">{{ $item['size'] }} × {{ $item['qty'] }}</p>
+                    <p class="text-xs text-gray-400">Size: {{ $item['size'] }} × {{ $item['qty'] }} &nbsp; | &nbsp; Color: {{ $item['color'] }}</p>
                 </div>
                 <p class="font-bold text-sm text-gray-900">৳{{ number_format($item['line_total'], 0) }}</p>
             </div>

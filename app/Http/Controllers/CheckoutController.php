@@ -129,7 +129,7 @@ class CheckoutController extends Controller
     /**
      * Show the order confirmation page.
      */
-    public function confirmation(Order $order): View
+    public function confirmation(Order $order)
     {
         return view('checkout.confirmation', compact('order'));
     }
