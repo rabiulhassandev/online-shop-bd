@@ -32,9 +32,7 @@
         $offerBannerMobile = \App\Models\Setting::get('offer_banner_mobile');
     @endphp
     <div>
-        <div class="mb-2 rounded-lg flex items-center justify-center text-white font-bold overflow-hidden" 
-             style="min-height: 150px; width: 100%; {{ (!$offerBannerPc && !$offerBannerMobile) ? 'background-color: #f87171;' : '' }}">
-            
+        <div class="mb-2 rounded-lg flex items-center justify-center text-white font-bold overflow-hidden">
             @if($offerBannerPc)
                 <img src="{{ asset('storage/' . $offerBannerPc) }}" alt="Offer Banner" class="w-full h-auto hidden md:block">
             @endif
