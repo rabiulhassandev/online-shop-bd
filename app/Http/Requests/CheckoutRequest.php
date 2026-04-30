@@ -25,6 +25,7 @@ class CheckoutRequest extends FormRequest
             'division_id' => ['required', 'exists:divisions,id'],
             'district_id' => ['required', 'exists:districts,id'],
             'upazila_id' => ['required', 'exists:upazilas,id'],
+            'delivery_area' => ['required', 'in:inside_dhaka,sub_dhaka,outside_dhaka'],
             'address' => ['required', 'string', 'max:1000'],
             'note' => ['nullable', 'string', 'max:500'],
             'payment_method' => ['required', 'in:cod,bkash,nagad'],

@@ -11,13 +11,16 @@ class OrderService
     /**
      * Create a new order from cart items and checkout data.
      *
-     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, address: string, note?: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, delivery_area: string, address: string, note?: string, payment_method: string}  $customerData
      * @param  array<int, array{key: string, product: Product, size: string, color: string, qty: int, unit_price: float, line_total: float}>  $hydratedItems
      */
     public function createFromCart(array $customerData, array $hydratedItems): Order
     {
-        $baseDeliveryCharge = (float) Setting::get('delivery_charge', 80);
-        $deliveryCharge = count($hydratedItems) > 1 ? 0 : $baseDeliveryCharge;
+        $area = $customerData['delivery_area'] ?? 'inside_dhaka';
+        $settingKey = "delivery_fee_{$area}";
+        $baseDeliveryCharge = (float) Setting::get($settingKey, 80);
+        $totalQty = array_sum(array_column($hydratedItems, 'qty'));
+        $deliveryCharge = $totalQty > 1 ? 0 : $baseDeliveryCharge;
         $subtotal = (float) array_sum(array_column($hydratedItems, 'line_total'));
         $total = $subtotal + $deliveryCharge;
 
@@ -52,7 +55,7 @@ class OrderService
     /**
      * Create a quick "Order Now" order for a single product.
      *
-     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, address: string, note?: string, payment_method: string}  $customerData
+     * @param  array{customer_name: string, phone: string, division_id: int, district_id: int, upazila_id: int, delivery_area: string, address: string, note?: string, payment_method: string}  $customerData
      */
     public function createSingleProduct(
         array $customerData,
@@ -61,7 +64,10 @@ class OrderService
         string $color,
         int $qty
     ): Order {
-        $deliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $area = $customerData['delivery_area'] ?? 'inside_dhaka';
+        $settingKey = "delivery_fee_{$area}";
+        $baseDeliveryCharge = (float) Setting::get($settingKey, 80);
+        $deliveryCharge = $qty > 1 ? 0 : $baseDeliveryCharge;
         $unitPrice = $product->hasActiveDiscount()
             ? (float) $product->discounted_price
             : (float) $product->price;

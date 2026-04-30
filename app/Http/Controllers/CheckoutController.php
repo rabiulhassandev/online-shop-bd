@@ -32,8 +32,9 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $this->cartService->subtotal();
-        $baseDeliveryCharge = (float) Setting::get('delivery_charge', 80);
-        $deliveryCharge = count($items) > 1 ? 0 : $baseDeliveryCharge;
+        $baseDeliveryCharge = (float) Setting::get('delivery_fee_inside_dhaka', 80);
+        $totalQty = array_sum(array_column($items, 'qty'));
+        $deliveryCharge = $totalQty > 1 ? 0 : $baseDeliveryCharge;
         $total = $subtotal + $deliveryCharge;
         $paymentMethods = $this->enabledPaymentMethods();
         $divisions = Division::active()->orderBy('name')->get(['id', 'name', 'bn_name']);
@@ -63,7 +64,8 @@ class CheckoutController extends Controller
             : (float) $product->price;
 
         $subtotal = $unitPrice * $qty;
-        $deliveryCharge = (float) Setting::get('delivery_charge', 80);
+        $baseDeliveryCharge = (float) Setting::get('delivery_fee_inside_dhaka', 80);
+        $deliveryCharge = $qty > 1 ? 0 : $baseDeliveryCharge;
         $total = $subtotal + $deliveryCharge;
         $paymentMethods = $this->enabledPaymentMethods();
         $divisions = Division::active()->orderBy('name')->get(['id', 'name', 'bn_name']);

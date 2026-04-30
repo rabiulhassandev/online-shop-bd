@@ -120,10 +120,22 @@
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
             <h3 class="font-semibold text-gray-900 mb-4">ডেলিভারি ও পেমেন্ট</h3>
             <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">ডেলিভারি চার্জ (৳)</label>
-                    <input type="number" name="delivery_charge" value="{{ $settings->get('delivery_charge', 80) }}" min="0"
-                           class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ঢাকার ভিতরে (৳)</label>
+                        <input type="number" name="delivery_fee_inside_dhaka" value="{{ $settings->get('delivery_fee_inside_dhaka', 80) }}" min="0"
+                               class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ঢাকা উপ-শাখা (৳)</label>
+                        <input type="number" name="delivery_fee_sub_dhaka" value="{{ $settings->get('delivery_fee_sub_dhaka', 100) }}" min="0"
+                               class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ঢাকার বাহিরে (৳)</label>
+                        <input type="number" name="delivery_fee_outside_dhaka" value="{{ $settings->get('delivery_fee_outside_dhaka', 120) }}" min="0"
+                               class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
                 </div>
                 <div class="space-y-2">
                     <p class="text-sm font-medium text-gray-700">পেমেন্ট পদ্ধতি সক্রিয় করুন</p>

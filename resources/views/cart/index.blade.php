@@ -103,8 +103,9 @@
                     <h2 class="font-bold text-gray-900 text-lg mb-5">অর্ডার সারসংক্ষেপ</h2>
 
                     @php
-                        $baseDeliveryCharge = (float)\App\Models\Setting::get('delivery_charge', 80);
-                        $deliveryCharge = count($items) > 1 ? 0 : $baseDeliveryCharge;
+                        $baseDeliveryCharge = (float)\App\Models\Setting::get('delivery_fee_inside_dhaka', 80);
+                        $totalQty = array_sum(array_column($items, 'qty'));
+                        $deliveryCharge = $totalQty > 1 ? 0 : $baseDeliveryCharge;
                     @endphp
 
                     <div class="space-y-3 text-sm mb-5">
@@ -113,17 +114,17 @@
                             <span class="font-medium">৳{{ number_format($subtotal, 0) }}</span>
                         </div>
                         <div class="flex justify-between text-gray-600">
-                            <span>ডেলিভারি চার্জ</span>
+                            <span>ডেলিভারি চার্জ <br><small>(ঢাকার ভিতরে)</small></span>
                             @if($deliveryCharge === 0)
-                                <span class="font-medium text-green-600">ফ্রি!</span>
+                                <span class="font-medium text-green-600 mt-1">ফ্রি!</span>
                             @else
-                                <span class="font-medium">৳0</span>
+                                <span class="font-medium mt-1">৳{{ number_format($deliveryCharge, 0) }}</span>
                             @endif
                         </div>
-                        @if($deliveryCharge === 0 && count($items) > 1)
+                        @if($deliveryCharge === 0 && $totalQty > 1)
                             <p class="text-xs text-green-600 flex items-center gap-1">
                                 <i class='bx bxs-gift text-sm'></i>
-                                {{ count($items) }}টি পণ্যের জন্য ফ্রি ডেলিভারি!
+                                ১টির বেশি পণ্য কিনলে ফ্রি ডেলিভারি!
                             </p>
                         @endif
                         <div class="border-t border-gray-100 pt-3 flex justify-between font-bold text-gray-900 text-base">

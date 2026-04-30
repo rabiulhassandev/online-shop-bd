@@ -17,12 +17,35 @@
             <input type="hidden" name="qty" value="{{ $qty ?? 1 }}">
         @endisset
 
+@php
+    $insideDhaka = \App\Models\Setting::get('delivery_fee_inside_dhaka', 80);
+    $subDhaka = \App\Models\Setting::get('delivery_fee_sub_dhaka', 100);
+    $outsideDhaka = \App\Models\Setting::get('delivery_fee_outside_dhaka', 120);
+    // If bulk items = free delivery
+    $totalQty = array_sum(array_column($items, 'qty'));
+    $isFreeDelivery = $totalQty > 1;
+@endphp
+
         <div class="flex flex-col lg:flex-row gap-8" x-data="{
             districts: [],
             upazilas: [],
             selectedDivision: '{{ old('division_id') ?? '' }}',
             selectedDistrict: '{{ old('district_id') ?? '' }}',
             selectedUpazila: '{{ old('upazila_id') ?? '' }}',
+            deliveryArea: 'inside_dhaka',
+            deliveryFees: { 
+                'inside_dhaka': {{ $insideDhaka }}, 
+                'sub_dhaka': {{ $subDhaka }}, 
+                'outside_dhaka': {{ $outsideDhaka }} 
+            },
+            isFreeDelivery: {{ $isFreeDelivery ? 'true' : 'false' }},
+            subtotal: {{ $subtotal }},
+            get deliveryCharge() {
+                return this.isFreeDelivery ? 0 : this.deliveryFees[this.deliveryArea];
+            },
+            get total() {
+                return this.subtotal + this.deliveryCharge;
+            },
             loadDistricts(divisionId) {
                 if (!divisionId) {
                     this.districts = [];
@@ -83,6 +106,18 @@
                                    placeholder="01XXXXXXXXX">
                         </div>
 
+                        
+                        <div>
+                            <label for="delivery_area" class="block text-sm font-medium text-gray-700 mb-1">ডেলিভারি এরিয়া *</label>
+                            <select id="delivery_area" name="delivery_area" required
+                                    x-model="deliveryArea"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow">
+                                <option value="inside_dhaka">ঢাকার ভিতরে</option>
+                                <option value="sub_dhaka">ঢাকা উপ-শাখা</option>
+                                <option value="outside_dhaka">ঢাকার বাহিরে</option>
+                            </select>
+                        </div>
+
                         {{-- Division --}}
                         <div>
                             <label for="division_id" class="block text-sm font-medium text-gray-700 mb-1">বিভাগ *</label>
@@ -127,6 +162,8 @@
                             </select>
                             <p x-show="selectedDistrict && upazilas.length === 0" class="text-xs text-gray-400 mt-1">এই জেলায় কোনো উপজেলা নেই</p>
                         </div>
+
+                        {{-- Delivery Area --}}
 
                         <div class="md:col-span-2">
                             <label for="address" class="block text-sm font-medium text-gray-700 mb-1">ডেলিভারি ঠিকানা *</label>
@@ -191,20 +228,21 @@
                         </div>
                         <div class="flex justify-between text-gray-600">
                             <span>ডেলিভারি</span>
-                            @if($deliveryCharge === 0)
+                            <template x-if="isFreeDelivery">
                                 <span class="text-green-600 font-medium">ফ্রি!</span>
-                            @else
-                                <span>৳{{ number_format($deliveryCharge, 0) }}</span>
-                            @endif
+                            </template>
+                            <template x-if="!isFreeDelivery">
+                                <span x-text="'৳' + Number(deliveryCharge).toLocaleString()"></span>
+                            </template>
                         </div>
-                        @if($deliveryCharge === 0 && count($items) > 1)
+                        <template x-if="isFreeDelivery">
                             <p class="text-xs text-green-600 flex items-center gap-1">
                                 <i class='bx bxs-gift text-sm'></i>
-                                {{ count($items) }}টি পণ্যের জন্য ফ্রি ডেলিভারি!
+                                ১টির বেশি পণ্য কিনলে ফ্রি ডেলিভারি!
                             </p>
-                        @endif
+                        </template>
                         <div class="border-t border-gray-100 pt-2 flex justify-between font-bold text-gray-900 text-base">
-                            <span>মোট</span><span>৳{{ number_format($total, 0) }}</span>
+                            <span>মোট</span><span x-text="'৳' + Number(total).toLocaleString()"></span>
                         </div>
                     </div>
 
