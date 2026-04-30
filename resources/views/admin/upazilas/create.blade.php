@@ -1,12 +1,31 @@
 @extends('layouts.admin')
-@section('title', 'নতুন উপজেলা')
-@section('page-title', 'নতুন উপজেলা')
+@section('title', 'নতুন উপজেলা/থানা')
+@section('page-title', 'নতুন উপজেলা/থানা')
 
 @section('content')
-<div class="max-w-2xl" x-data="{ divisions: {{ json_encode($divisions) }}, districts: [], selectedDivision: null, selectedDistrict: null }">
+<div class="max-w-2xl" x-data="{
+    districts: [],
+    selectedDivision: '{{ old('division_id') }}',
+    selectedDistrict: '{{ old('district_id') }}',
+    loadDistricts(divisionId) {
+        this.selectedDistrict = '';
+
+        if (!divisionId) {
+            this.districts = [];
+            return;
+        }
+
+        fetch(`{{ route('admin.api.districts.by-division', ':id') }}`.replace(':id', divisionId))
+            .then(response => response.json())
+            .then(data => {
+                this.districts = data;
+            })
+            .catch(error => console.error('Error loading districts:', error));
+    }
+}">
     <a href="{{ route('admin.upazilas.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-amber-500 mb-6 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        উপজেলা তালিকায় ফিরুন
+        উপজেলা/থানা তালিকায় ফিরুন
     </a>
 
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
@@ -25,6 +44,7 @@
                 <div>
                     <label for="division_select" class="block text-sm font-medium text-gray-700 mb-1">বিভাগ *</label>
                     <select id="division_select" name="division_id" required
+                            x-model="selectedDivision"
                             @change="loadDistricts($event.target.value)"
                             class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
                         <option value="">বিভাগ নির্বাচন করুন</option>
@@ -37,7 +57,8 @@
                 <div>
                     <label for="district_select" class="block text-sm font-medium text-gray-700 mb-1">জেলা *</label>
                     <select id="district_select" name="district_id" required
-                            :disabled="districts.length === 0"
+                            x-model="selectedDistrict"
+                            :disabled="!selectedDivision || districts.length === 0"
                             class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 disabled:bg-gray-100">
                         <option value="">জেলা নির্বাচন করুন</option>
                         <template x-for="district in districts" :key="district.id">
@@ -78,20 +99,5 @@
         </form>
     </div>
 
-    <script>
-        function loadDistricts(divisionId) {
-            if (!divisionId) {
-                districts = [];
-                return;
-            }
-
-            fetch(`{{ route('admin.api.districts.by-division', ':id') }}`.replace(':id', divisionId))
-                .then(response => response.json())
-                .then(data => {
-                    districts = data;
-                })
-                .catch(error => console.error('Error loading districts:', error));
-        }
-    </script>
 </div>
 @endsection

@@ -42,11 +42,13 @@ class UpazilaController extends Controller
             'is_active' => request()->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.upazilas.index')->with('success', 'উপজেলা তৈরি হয়েছে।');
+        return redirect()->route('admin.upazilas.index')->with('success', 'উপজেলা/থানা তৈরি হয়েছে।');
     }
 
     public function edit(Upazila $upazila): View
     {
+        $upazila->loadMissing('district');
+
         $divisions = Division::active()->orderBy('name')->get();
 
         return view('admin.upazilas.edit', compact('upazila', 'divisions'));
@@ -68,14 +70,14 @@ class UpazilaController extends Controller
             'is_active' => request()->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.upazilas.index')->with('success', 'উপজেলা আপডেট হয়েছে।');
+        return redirect()->route('admin.upazilas.index')->with('success', 'উপজেলা/থানা আপডেট হয়েছে।');
     }
 
     public function destroy(Upazila $upazila): RedirectResponse
     {
         $upazila->delete();
 
-        return back()->with('success', 'উপজেলা মুছে ফেলা হয়েছে।');
+        return back()->with('success', 'উপজেলা/থানা মুছে ফেলা হয়েছে।');
     }
 
     public function getByDistrict(District $district): JsonResponse

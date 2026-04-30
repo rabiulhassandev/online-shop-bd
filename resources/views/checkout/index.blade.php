@@ -150,17 +150,17 @@
 
                         {{-- Upazila --}}
                         <div>
-                            <label for="upazila_id" class="block text-sm font-medium text-gray-700 mb-1">উপজেলা *</label>
+                            <label for="upazila_id" class="block text-sm font-medium text-gray-700 mb-1">উপজেলা/থানা *</label>
                             <select id="upazila_id" name="upazila_id" required
                                     x-model="selectedUpazila"
                                     :disabled="!selectedDistrict || upazilas.length === 0"
                                     class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow disabled:bg-gray-100">
-                                <option value="">উপজেলা নির্বাচন করুন</option>
+                                <option value="">উপজেলা/থানা নির্বাচন করুন</option>
                                 <template x-for="upazila in upazilas" :key="upazila.id">
                                     <option :value="upazila.id" x-text="upazila.bn_name"></option>
                                 </template>
                             </select>
-                            <p x-show="selectedDistrict && upazilas.length === 0" class="text-xs text-gray-400 mt-1">এই জেলায় কোনো উপজেলা নেই</p>
+                            <p x-show="selectedDistrict && upazilas.length === 0" class="text-xs text-gray-400 mt-1">এই জেলায় কোনো উপজেলা/থানা নেই</p>
                         </div>
 
                         {{-- Delivery Area --}}
