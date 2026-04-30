@@ -7,7 +7,7 @@
 {{-- Bulk Discount --}}
 <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-6">
     <h3 class="font-semibold text-gray-900 mb-4">বাল্ক ডিসকাউন্ট প্রয়োগ করুন</h3>
-    <form action="{{ route('admin.discounts.bulk') }}" method="POST">
+    <form action="{{ route('admin.discounts.bulk') }}" method="POST" id="bulk-form">
         @csrf
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div>
