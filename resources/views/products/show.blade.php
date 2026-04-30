@@ -184,9 +184,10 @@
                 <p class="text-xs text-gray-400 mt-2 text-center" x-show="!selectedSize">* সাইজ বেছে নিন</p>
             @endif
 
-            <!-- Product Chart Image (public/assets/images/product-chart.jpeg) -->
+            <!-- Product Chart Image -->
+            @php $chartImage = \App\Models\Setting::get('product_chart_image'); @endphp
             <div class="mt-10">
-                <img src="{{ asset('assets/images/product-chart.jpeg') }}" alt="Product Chart" class="w-full rounded-lg border border-gray-200">
+                <img src="{{ $chartImage ? asset('storage/' . $chartImage) : asset('assets/images/product-chart.jpeg') }}" alt="Product Chart" class="w-full rounded-lg border border-gray-200">
             </div>
         </div>
     </div>

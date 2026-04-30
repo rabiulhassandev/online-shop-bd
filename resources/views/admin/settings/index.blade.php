@@ -68,12 +68,22 @@
             </div>
         </div>
 
-        {{-- Product Promo Text --}}
+        {{-- Product Promo Text & Chart --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
-            <h3 class="font-semibold text-gray-900 mb-4">পণ্য প্রমো টেক্সট</h3>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">পণ্য প্রমো টেক্সট</label>
-                <textarea name="product_promo_text" rows="3" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none">{{ $settings->get('product_promo_text') }}</textarea>
+            <h3 class="font-semibold text-gray-900 mb-4">পণ্য প্রমো টেক্সট ও সাইজ চার্ট</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">পণ্য প্রমো টেক্সট</label>
+                    <textarea name="product_promo_text" rows="3" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none">{{ $settings->get('product_promo_text') }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">প্রোডাক্ট চার্ট ছবি (Product Chart Image)</label>
+                    <p class="text-xs text-red-500 mb-2">রেজোলিউশন (Resolution): 400px × 400px (বা কাছাকাছি)</p>
+                    @if($settings->get('product_chart_image'))
+                        <img src="{{ asset('storage/'.$settings->get('product_chart_image')) }}" class="h-20 object-contain mb-2 border rounded">
+                    @endif
+                    <input type="file" name="product_chart_image" accept="image/*" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2">
+                </div>
             </div>
         </div>
 

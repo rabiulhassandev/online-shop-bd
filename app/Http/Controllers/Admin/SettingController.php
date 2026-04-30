@@ -48,6 +48,11 @@ class SettingController extends Controller
             $settingsToSave['offer_banner_mobile'] = $request->file('offer_banner_mobile')->store('settings', 'public');
         }
 
+        // Handle Product Chart Image
+        if ($request->hasFile('product_chart_image')) {
+            $settingsToSave['product_chart_image'] = $request->file('product_chart_image')->store('settings', 'public');
+        }
+
         // Map remaining scalar fields
         $scalarFields = ['site_name', 'phone', 'email', 'address', 'product_promo_text', 'about_us', 'terms_and_conditions', 'return_policy', 'whatsapp', 'facebook_url', 'instagram_url', 'delivery_charge', 'offer_text'];
         foreach ($scalarFields as $field) {

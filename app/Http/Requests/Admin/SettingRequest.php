@@ -41,6 +41,7 @@ class SettingRequest extends FormRequest
             'offer_text' => ['nullable', 'string', 'max:5000'],
             'offer_banner_pc' => ['nullable', 'image', 'max:2048'],
             'offer_banner_mobile' => ['nullable', 'image', 'max:2048'],
+            'product_chart_image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }
