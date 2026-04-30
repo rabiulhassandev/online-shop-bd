@@ -48,7 +48,7 @@
                     @foreach($recentOrders as $order)
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-4 py-3">
-                            <a href="{{ route('admin.orders.show', $order) }}" class="font-mono text-xs text-amber-600 hover:underline">{{ $order->order_number }}</a>
+                            <a href="{{ route('admin.orders.show', $order->id) }}" class="font-mono text-xs text-amber-600 hover:underline">{{ $order->order_number }}</a>
                         </td>
                         <td class="px-4 py-3 text-gray-800">{{ $order->customer_name }}</td>
                         <td class="px-4 py-3 text-gray-500">{{ $order->phone }}</td>
@@ -77,7 +77,7 @@
         </div>
         <div class="p-2">
             @forelse($lowStockProducts as $product)
-            <a href="{{ route('admin.products.edit', $product) }}"
+            <a href="{{ route('admin.products.edit', $product->id) }}"
                class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors group">
                 <span class="text-sm text-gray-800 group-hover:text-amber-600 transition-colors line-clamp-1">{{ $product->name }}</span>
                 <span class="ml-2 shrink-0 text-xs font-bold {{ $product->total_stock === 0 ? 'text-red-500' : 'text-orange-500' }}">

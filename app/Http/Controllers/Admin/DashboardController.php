@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $pendingOrders = Order::where('status', 'pending')->count();
         $todayOrders = Order::whereDate('created_at', today())->count();
 
-        $recentOrders = Order::select(['id', 'order_number', 'customer_name', 'phone', 'total', 'status', 'created_at'])
+        $recentOrders = Order::select(['id', 'uuid', 'order_number', 'customer_name', 'phone', 'total', 'status', 'created_at'])
             ->latest()
             ->limit(10)
             ->get();
