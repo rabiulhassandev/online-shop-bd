@@ -66,12 +66,12 @@ class Order extends Model
     }
 
     /**
-     * Generate a unique order number in MS-2097-XXXX format.
+     * Generate a unique order number starting from MS-2097.
      */
     public static function generateOrderNumber(): string
     {
-        $year = now()->year;
-        $prefix = "MS-2097-";
+        $prefix = 'MS-';
+        $startNumber = 2097;
 
         $lastOrder = static::where('order_number', 'like', "{$prefix}%")
             ->orderByDesc('id')
@@ -79,12 +79,13 @@ class Order extends Model
 
         if ($lastOrder) {
             $lastNumber = (int) str_replace($prefix, '', $lastOrder->order_number);
-            $nextNumber = $lastNumber + 1;
+            // Ensure we don't drop below the starting sequence
+            $nextNumber = max($lastNumber + 1, $startNumber);
         } else {
-            $nextNumber = 1;
+            $nextNumber = $startNumber;
         }
 
-        return $prefix.str_pad((string) $nextNumber, 4, '0', STR_PAD_LEFT);
+        return $prefix.$nextNumber;
     }
 
     /** @var array<string, string> */
