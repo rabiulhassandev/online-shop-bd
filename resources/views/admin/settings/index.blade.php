@@ -32,7 +32,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">লোগো</label>
-                        <p class="text-xs text-red-500 mb-2">PNG, JPG • 360px × 100px</p>
+                        <p class="text-xs text-red-500 mb-2">PNG, JPG • 150px × 50px</p>
                         @if($settings->get('site_logo'))
                             <img src="{{ asset('storage/'.$settings->get('site_logo')) }}" class="h-10 mb-2 rounded">
                         @endif
@@ -77,6 +77,34 @@
             </div>
         </div>
 
+        {{-- Discount Offer Settings --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
+            <h3 class="font-semibold text-gray-900 mb-4">ডিসকাউন্ট পেজ সেটিংস</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">অফার টেক্সট (Offer Text)</label>
+                    <textarea name="offer_text" rows="2" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" placeholder="উদাহরণ: Special Offer: Up to 50% off on selected items!">{{ $settings->get('offer_text') }}</textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ব্যানার (PC)</label>
+                        <p class="text-xs text-red-500 mb-2">রেজোলিউশন (Resolution): 1200px × 150px (বা কাছাকাছি)</p>
+                        @if($settings->get('offer_banner_pc'))
+                            <img src="{{ asset('storage/'.$settings->get('offer_banner_pc')) }}" class="h-12 object-contain mb-2 border rounded">
+                        @endif
+                        <input type="file" name="offer_banner_pc" accept="image/*" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ব্যানার (Mobile)</label>
+                        <p class="text-xs text-red-500 mb-2">রেজোলিউশন (Resolution): 600px × 150px (বা কাছাকাছি)</p>
+                        @if($settings->get('offer_banner_mobile'))
+                            <img src="{{ asset('storage/'.$settings->get('offer_banner_mobile')) }}" class="h-12 object-contain mb-2 border rounded">
+                        @endif
+                        <input type="file" name="offer_banner_mobile" accept="image/*" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{-- Delivery & Payment --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">

@@ -159,7 +159,7 @@
                     <h3 class="font-semibold text-gray-900 mb-4">নতুন ছবি যোগ করুন</h3>
                     <input type="file" name="images[]" accept="image/*" multiple
                            class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm">
-                    <p class="text-xs text-gray-400 mt-1">বিদ্যমান ছবির সাথে যোগ হবে।</p>
+                    <p class="text-xs text-red-500 mt-1">JPG, PNG — সর্বোচ্চ 2MB - 400px × 400px</p>
                 </div>
             </div>
 

@@ -38,6 +38,9 @@ class SettingRequest extends FormRequest
             'bkash_enabled' => ['nullable', 'boolean'],
             'nagad_enabled' => ['nullable', 'boolean'],
             'maintenance_mode' => ['nullable', 'boolean'],
+            'offer_text' => ['nullable', 'string', 'max:5000'],
+            'offer_banner_pc' => ['nullable', 'image', 'max:2048'],
+            'offer_banner_mobile' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

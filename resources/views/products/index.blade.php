@@ -7,18 +7,50 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     {{-- Page Header --}}
-    <div class="mb-8">
+    <div class="mb-5">
         <h1 class="text-3xl font-bold text-gray-900">
             @if(request('listing') === 'hot')
                 হট সেলিং প্রোডাক্ট
             @elseif(request('listing') === 'discount')
-                ডিসকাউন্ট প্রোডাক্ট
+                চলমান অফার
             @else
                 সব পণ্য
             @endif
         </h1>
         <p class="text-gray-500 mt-1">{{ $products->total() }}টি পণ্য পাওয়া গেছে</p>
     </div>
+
+    {{-- alert --}}
+    <div class="">
+
+    </div>
+
+    @if(request('listing') === 'discount')
+    @php
+        $offerText = \App\Models\Setting::get('offer_text');
+        $offerBannerPc = \App\Models\Setting::get('offer_banner_pc');
+        $offerBannerMobile = \App\Models\Setting::get('offer_banner_mobile');
+    @endphp
+    <div>
+        <div class="mb-2 rounded-lg flex items-center justify-center text-white font-bold overflow-hidden" 
+             style="min-height: 150px; width: 100%; {{ (!$offerBannerPc && !$offerBannerMobile) ? 'background-color: #f87171;' : '' }}">
+            
+            @if($offerBannerPc)
+                <img src="{{ asset('storage/' . $offerBannerPc) }}" alt="Offer Banner" class="w-full h-auto hidden md:block">
+            @endif
+            
+            @if($offerBannerMobile)
+                <img src="{{ asset('storage/' . $offerBannerMobile) }}" alt="Offer Banner Mobile" class="w-full h-auto block md:hidden">
+            @endif
+        </div>
+        
+        @if(trim($offerText))
+            <marquee behavior="scroll" direction="" style="background-color: #e74747;" class="text-white font-bold py-1 rounded-md">
+                {{ $offerText }}
+            </marquee>
+        @endif
+    </div>
+    @endif
 
     {{-- Filters --}}
     <form method="GET" action="{{ route('products.index') }}" class="bg-white border border-gray-200 rounded-xl p-4 mb-8 flex flex-wrap gap-4 items-end">

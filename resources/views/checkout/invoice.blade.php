@@ -353,6 +353,9 @@
         <div class="invoice-top-bar">
             <div class="top-bar-header">
                 <div>
+                    @if(\App\Models\Setting::get('site_logo') != 0)
+                        <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" style="height: 50px;">
+                    @endif
                     <div class="brand-name">{{ \App\Models\Setting::get('site_name', 'Online Shop BD') }}</div>
                     <div class="brand-sub">Your Style, Your Signature</div>
                 </div>
@@ -368,7 +371,7 @@
                 </div>
                 <div>
                     <div class="date-label">অর্ডার তারিখ</div>
-                    <div class="date-value">{{ $order->created_at->format('d F Y') }}</div>
+                    <div class="date-value">{{ $order->created_at->format('d F Y H:i') }}</div>
                 </div>
             </div>
         </div>

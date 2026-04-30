@@ -40,8 +40,16 @@ class SettingController extends Controller
             $settingsToSave['site_favicon'] = $request->file('site_favicon')->store('settings', 'public');
         }
 
+        // Handle offer banners
+        if ($request->hasFile('offer_banner_pc')) {
+            $settingsToSave['offer_banner_pc'] = $request->file('offer_banner_pc')->store('settings', 'public');
+        }
+        if ($request->hasFile('offer_banner_mobile')) {
+            $settingsToSave['offer_banner_mobile'] = $request->file('offer_banner_mobile')->store('settings', 'public');
+        }
+
         // Map remaining scalar fields
-        $scalarFields = ['site_name', 'phone', 'email', 'address', 'product_promo_text', 'about_us', 'terms_and_conditions', 'return_policy', 'whatsapp', 'facebook_url', 'instagram_url', 'delivery_charge'];
+        $scalarFields = ['site_name', 'phone', 'email', 'address', 'product_promo_text', 'about_us', 'terms_and_conditions', 'return_policy', 'whatsapp', 'facebook_url', 'instagram_url', 'delivery_charge', 'offer_text'];
         foreach ($scalarFields as $field) {
             $settingsToSave[$field] = $validated[$field] ?? null;
         }
