@@ -206,15 +206,15 @@
 
 {{-- Flash Messages --}}
 @if(session('success') || session('error'))
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flash-message">
+    <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 flash-message animate-pop" style="scale: 1.1">
         @if(session('success'))
-            <div class="bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center gap-3">
+            <div class="bg-green-50  text-green-800 px-4 py-3 shadow-lg flex items-center gap-3">
                 <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
                 {{ session('success') }}
             </div>
         @endif
         @if(session('error'))
-            <div class="bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 flex items-center gap-3">
+            <div class="bg-red-50 text-red-800 px-4 py-3 shadow-lg flex items-center gap-3">
                 <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
                 {{ session('error') }}
             </div>

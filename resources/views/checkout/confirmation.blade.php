@@ -57,7 +57,7 @@
     <p class="text-sm text-gray-500 mb-6">আমরা শীঘ্রই আপনাকে কল করে অর্ডার নিশ্চিত করব।</p>
 
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="{{ route('checkout.invoice', $order->id) }}"
+        <a href="{{ route('checkout.invoice', $order->uuid) }}"
            target="_blank"
            class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-full transition-colors">
             📥 ইনভয়েস ডাউনলোড

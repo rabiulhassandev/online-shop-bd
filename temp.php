@@ -1,0 +1,1 @@
+<?php foreach(\App\Models\Order::all() as \) { \->update(['uuid' => (string) str()->uuid()]); }

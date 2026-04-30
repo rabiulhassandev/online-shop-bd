@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
     /** @var list<string> */
     protected $fillable = [
+        'uuid',
         'order_number',
         'customer_name',
         'phone',
@@ -59,10 +61,21 @@ class Order extends Model
     protected static function booted(): void
     {
         static::creating(function (Order $order) {
+            if (! $order->uuid) {
+                $order->uuid = (string) Str::uuid();
+            }
             if (! $order->order_number) {
                 $order->order_number = static::generateOrderNumber();
             }
         });
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 
     /**

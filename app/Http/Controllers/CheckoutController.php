@@ -100,7 +100,7 @@ class CheckoutController extends Controller
         $order = $this->orderService->createFromCart($request->validated(), $items);
         $this->cartService->clear();
 
-        return redirect()->route('checkout.confirmation', $order->id);
+        return redirect()->route('checkout.confirmation', $order->uuid);
     }
 
     /**
@@ -125,7 +125,7 @@ class CheckoutController extends Controller
             qty: (int) $request->get('qty', 1),
         );
 
-        return redirect()->route('checkout.confirmation', $order->id);
+        return redirect()->route('checkout.confirmation', $order->uuid);
     }
 
     /**
