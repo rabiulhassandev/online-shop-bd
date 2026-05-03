@@ -233,10 +233,11 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             {{-- Brand --}}
             <div>
-                @if(\App\Models\Setting::get('site_logo') == 0)
+                @if(\App\Models\Setting::get('site_logo') != 0)
                     <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
-                @endif
+                @else
                 <h3 class="text-white text-xl font-bold mb-3">Men's <span class="text-amber-400">Signature</span></h3>
+                @endif
                 <p class="text-sm text-gray-400 leading-relaxed space-y-2">Your Style, Your Signature</p>
             </div>
 
