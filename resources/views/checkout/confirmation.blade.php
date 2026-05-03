@@ -45,7 +45,7 @@
         <div class="border-t border-gray-100 pt-4 mt-4 grid grid-cols-2 gap-3 text-sm">
             <div><p class="text-gray-400 text-xs mb-0.5">নাম</p><p class="font-medium text-gray-900">{{ $order->customer_name }}</p></div>
             <div><p class="text-gray-400 text-xs mb-0.5">ফোন</p><p class="font-medium text-gray-900">{{ $order->phone }}</p></div>
-            <div class="col-span-2"><p class="text-gray-400 text-xs mb-0.5">ঠিকানা</p><p class="font-medium text-gray-900">{{ $order->address }}</p></div>
+            <div class="col-span-2"><p class="text-gray-400 text-xs mb-0.5">ঠিকানা</p><p class="font-medium text-gray-900">{{ $order->address }}, {{ $order->upazila?->bn_name }}, {{ $order->district?->bn_name }}</p></div>
             @if($order->note)
                 <div class="col-span-2"><p class="text-gray-400 text-xs mb-0.5">নোট</p><p class="font-medium text-gray-900 bg-gray-50 rounded-lg px-3 py-2">{{ $order->note }}</p></div>
             @endif

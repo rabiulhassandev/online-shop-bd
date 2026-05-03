@@ -114,7 +114,7 @@
                             <span class="font-medium">৳{{ number_format($subtotal, 0) }}</span>
                         </div>
                         <div class="flex justify-between text-gray-600">
-                            <span>ডেলিভারি চার্জ <br><small>(ঢাকার ভিতরে)</small></span>
+                            <span>ডেলিভারি চার্জ</span>
                             @if($deliveryCharge === 0)
                                 <span class="font-medium text-green-600 mt-1">ফ্রি!</span>
                             @else

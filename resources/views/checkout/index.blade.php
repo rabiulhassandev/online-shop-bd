@@ -27,9 +27,7 @@
 @endphp
 
         <div class="flex flex-col lg:flex-row gap-8" x-data="{
-            districts: [],
             upazilas: [],
-            selectedDivision: '{{ old('division_id') ?? '' }}',
             selectedDistrict: '{{ old('district_id') ?? '' }}',
             selectedUpazila: '{{ old('upazila_id') ?? '' }}',
             deliveryArea: 'inside_dhaka',
@@ -46,23 +44,6 @@
             get total() {
                 return this.subtotal + this.deliveryCharge;
             },
-            loadDistricts(divisionId) {
-                if (!divisionId) {
-                    this.districts = [];
-                    this.selectedDistrict = '';
-                    this.upazilas = [];
-                    this.selectedUpazila = '';
-                    return;
-                }
-                fetch(`{{ route('api.districts.by-division', ':id') }}`.replace(':id', divisionId))
-                    .then(response => response.json())
-                    .then(data => {
-                        this.districts = data;
-                        this.upazilas = [];
-                        this.selectedUpazila = '';
-                    })
-                    .catch(error => console.error('Error loading districts:', error));
-            },
             loadUpazilas(districtId) {
                 if (!districtId) {
                     this.upazilas = [];
@@ -76,7 +57,7 @@
                     })
                     .catch(error => console.error('Error loading upazilas:', error));
             }
-        }" x-init="$nextTick(() => { if(selectedDivision) loadDistricts(selectedDivision); if(selectedDistrict) loadUpazilas(selectedDistrict); })">
+        }" x-init="$nextTick(() => { if(selectedDistrict) loadUpazilas(selectedDistrict); })">
 
             {{-- Checkout Form --}}
             <div class="flex-1">
@@ -118,34 +99,18 @@
                             </select>
                         </div>
 
-                        {{-- Division --}}
-                        <div>
-                            <label for="division_id" class="block text-sm font-medium text-gray-700 mb-1">বিভাগ *</label>
-                            <select id="division_id" name="division_id" required
-                                    x-model="selectedDivision"
-                                    @change="loadDistricts($event.target.value)"
-                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow">
-                                <option value="">বিভাগ নির্বাচন করুন</option>
-                                @foreach($divisions as $division)
-                                    <option value="{{ $division->id }}">{{ $division->bn_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         {{-- District --}}
                         <div>
                             <label for="district_id" class="block text-sm font-medium text-gray-700 mb-1">জেলা *</label>
                             <select id="district_id" name="district_id" required
                                     x-model="selectedDistrict"
-                                    :disabled="!selectedDivision || districts.length === 0"
                                     @change="loadUpazilas($event.target.value)"
-                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow disabled:bg-gray-100">
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition-shadow">
                                 <option value="">জেলা নির্বাচন করুন</option>
-                                <template x-for="district in districts" :key="district.id">
-                                    <option :value="district.id" x-text="district.bn_name"></option>
-                                </template>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->bn_name }}</option>
+                                @endforeach
                             </select>
-                            <p x-show="selectedDivision && districts.length === 0" class="text-xs text-gray-400 mt-1">এই বিভাগে কোনো জেলা নেই</p>
                         </div>
 
                         {{-- Upazila --}}

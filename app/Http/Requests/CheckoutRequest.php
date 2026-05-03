@@ -22,7 +22,6 @@ class CheckoutRequest extends FormRequest
         return [
             'customer_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
-            'division_id' => ['required', 'exists:divisions,id'],
             'district_id' => ['required', 'exists:districts,id'],
             'upazila_id' => ['required', 'exists:upazilas,id'],
             'delivery_area' => ['required', 'in:inside_dhaka,sub_dhaka,outside_dhaka'],

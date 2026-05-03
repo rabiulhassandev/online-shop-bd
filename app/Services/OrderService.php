@@ -38,7 +38,7 @@ class OrderService
         return Order::create([
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
-            'division_id' => $customerData['division_id'],
+            'division_id' => \App\Models\District::find($customerData['district_id'])?->division_id,
             'district_id' => $customerData['district_id'],
             'upazila_id' => $customerData['upazila_id'],
             'address' => $customerData['address'],
@@ -78,7 +78,7 @@ class OrderService
         return Order::create([
             'customer_name' => $customerData['customer_name'],
             'phone' => $customerData['phone'],
-            'division_id' => $customerData['division_id'],
+            'division_id' => \App\Models\District::find($customerData['district_id'])?->division_id,
             'district_id' => $customerData['district_id'],
             'upazila_id' => $customerData['upazila_id'],
             'address' => $customerData['address'],
