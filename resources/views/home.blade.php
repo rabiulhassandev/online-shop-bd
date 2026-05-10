@@ -23,8 +23,15 @@
                     x-transition:enter-start="opacity-0 scale-105" x-transition:enter-end="opacity-100 scale-100"
                     class="absolute inset-0" style="display: none;">
 
-                    <img src="{{ $slider->image_url }}" alt="{{ $slider->title }}"
-                        class="absolute inset-0 w-full h-full object-cover">
+                    @if($slider->banner_mobile)
+                        <img src="{{ $slider->banner_mobile_url }}" alt="{{ $slider->title }}"
+                            class="absolute inset-0 w-full h-full object-cover md:hidden">
+                        <img src="{{ $slider->image_url }}" alt="{{ $slider->title }}"
+                            class="absolute inset-0 w-full h-full object-cover hidden md:block">
+                    @else
+                        <img src="{{ $slider->image_url }}" alt="{{ $slider->title }}"
+                            class="absolute inset-0 w-full h-full object-cover">
+                    @endif
                     <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
 
                     <div class="absolute inset-0 flex items-center">

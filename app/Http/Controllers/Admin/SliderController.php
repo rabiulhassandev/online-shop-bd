@@ -35,6 +35,9 @@ class SliderController extends Controller
     {
         $data = $request->validated();
         $data['image'] = $request->file('image')->store('sliders', 'public');
+        if ($request->hasFile('banner_mobile')) {
+            $data['banner_mobile'] = $request->file('banner_mobile')->store('sliders', 'public');
+        }
         $data['is_active'] = $request->boolean('is_active', true);
 
         Slider::create($data);
@@ -63,9 +66,10 @@ class SliderController extends Controller
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'banner_mobile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if (!isset($data['is_active'])) {
+        if (! isset($data['is_active'])) {
             $data['is_active'] = false;
         }
 
@@ -73,6 +77,12 @@ class SliderController extends Controller
             $data['image'] = $request->file('image')->store('sliders', 'public');
         } else {
             unset($data['image']);
+        }
+
+        if ($request->hasFile('banner_mobile')) {
+            $data['banner_mobile'] = $request->file('banner_mobile')->store('sliders', 'public');
+        } else {
+            unset($data['banner_mobile']);
         }
 
         $slider->update($data);

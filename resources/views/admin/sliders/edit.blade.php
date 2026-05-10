@@ -10,8 +10,16 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">বিদ্যমান ছবি</label>
                 <img src="{{ $slider->image_url }}" class="w-full h-40 object-cover rounded-xl mb-2">
-                <label class="block text-sm font-medium text-gray-700 mb-1">নতুন ছবি <span class="text-xs text-red-500">(1920×600px)</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">নতুন ছবি <span class="text-xs text-red-500">(1870px x 500px)</span></label>
                 <input type="file" name="image" accept="image/*" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">বিদ্যমান মোবাইল ছবি</label>
+                @if($slider->banner_mobile)
+                    <img src="{{ $slider->banner_mobile_url }}" class="w-32 h-40 object-cover rounded-xl mb-2">
+                @endif
+                <label class="block text-sm font-medium text-gray-700 mb-1">নতুন মোবাইল ছবি (ঐচ্ছিক) <span class="text-xs text-red-500">(500px × 500px)</span></label>
+                <input type="file" name="banner_mobile" accept="image/*" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">শিরোনাম</label>

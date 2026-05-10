@@ -24,6 +24,7 @@ class SliderRequest extends FormRequest
 
         return [
             'image' => [$isUpdate ? 'nullable' : 'required', 'image', 'max:2048'],
+            'banner_mobile' => ['nullable', 'image', 'max:2048'],
             'title' => ['nullable', 'string', 'max:255'],
             'subtitle' => ['nullable', 'string', 'max:500'],
             'button_text' => ['nullable', 'string', 'max:100'],

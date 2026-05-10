@@ -6,6 +6,8 @@
     <title>@yield('title', 'Admin') | Men's Signature অ্যাডমিন</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')

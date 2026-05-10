@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Invoice - {{ $order->order_number }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -390,9 +392,9 @@
                     <div class="section-muted">
                         {{ $order->phone }}<br>
                         {{ $order->address }}<br>
-                        @if ($order->upazila){{ $order->upazila->name }}, @endif
-                        @if ($order->district){{ $order->district->name }}, @endif
-                        @if ($order->division){{ $order->division->name }}@endif
+                        @if ($order->upazila){{ $order->upazila->bn_name }}, @endif
+                        @if ($order->district){{ $order->district->bn_name }}, @endif
+                        @if ($order->division){{ $order->division->bn_name }}@endif
                     </div>
                 </div>
             </div>

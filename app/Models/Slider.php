@@ -10,6 +10,7 @@ class Slider extends Model
     /** @var list<string> */
     protected $fillable = [
         'image',
+        'banner_mobile',
         'title',
         'subtitle',
         'button_text',
@@ -43,5 +44,13 @@ class Slider extends Model
     public function getImageUrlAttribute(): string
     {
         return asset('storage/'.$this->image);
+    }
+
+    /**
+     * Get the mobile banner image URL.
+     */
+    public function getBannerMobileUrlAttribute(): ?string
+    {
+        return $this->banner_mobile ? asset('storage/'.$this->banner_mobile) : null;
     }
 }

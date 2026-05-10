@@ -1,30 +1,33 @@
 @props(['product'])
 
-<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col">
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col group">
     {{-- Product Image --}}
-    <a href="{{ route('products.show', $product) }}" class="product-image-wrap block aspect-[4/3] bg-gray-50">
+    <a href="{{ route('products.show', $product) }}" class="product-image-wrap relative block aspect-[4/4] bg-gray-50">
         <img
             src="{{ $product->primary_image }}"
             alt="{{ $product->name }}"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
         >
-    </a>
-
-    <div class="p-4 flex flex-col flex-1">
-
-        {{-- Discount Badge + Timer --}}
+        
+        {{-- Discount Badge Overlay --}}
         @if($product->hasActiveDiscount())
-            <div class="flex items-center gap-2 mb-2" data-discount-badge>
-                <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5 z-10" data-discount-badge>
+                <span class="bg-red-500 text-white text-xs font-bold px-2.5 py-1 shadow-sm">
                     {{ $product->discount_percent }}% ছাড়
                 </span>
-                @if($product->discount_end_at)
-                    <span class="text-xs text-gray-500 font-mono tabular-nums" data-countdown="{{ $product->discount_end_at->timestamp }}"></span>
-                @endif
             </div>
         @endif
 
+        {{-- Discount Timer --}}
+        @if($product->hasActiveDiscount() && $product->discount_end_at)
+            <div class="absolute bottom-2 right-2 z-10">
+                <span class=" text-[11px] font-mono tabular-nums px-2.5 py-1 backdrop-blur-sm" data-countdown="{{ $product->discount_end_at->timestamp }}"></span>
+            </div>
+        @endif
+    </a>
+
+    <div class="p-4 flex flex-col flex-1">
         {{-- Product Name --}}
         <a href="{{ route('products.show', $product) }}" class="font-semibold text-gray-900 hover:text-amber-600 transition-colors leading-tight mb-1 line-clamp-2">
             {{ $product->name }}

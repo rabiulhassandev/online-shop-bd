@@ -146,7 +146,7 @@ document.querySelectorAll('form').forEach(form => {
                     <h3 class="font-semibold text-gray-900 mb-4">পণ্যের ছবি (সর্বোচ্চ ৫টি)</h3>
                     <input type="file" name="images[]" accept="image/*" multiple
                            class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
-                    <p class="text-xs text-red-500 mt-1">JPG, PNG — সর্বোচ্চ 2MB - 400px × 400px</p>
+                    <p class="text-xs text-red-500 mt-1">JPG, PNG — সর্বোচ্চ 2MB - 1080px × 1080px</p>
                 </div>
             </div>
 
