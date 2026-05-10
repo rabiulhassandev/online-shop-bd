@@ -15,8 +15,24 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @if(config('services.gtm.id'))
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ config('services.gtm.id') }}');</script>
+    <!-- End Google Tag Manager -->
+    @endif
 </head>
 <body class="bg-white text-gray-900 antialiased">
+<!-- Google Tag Manager (noscript) -->
+@if(config('services.gtm.id'))
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('services.gtm.id') }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+@endif
+<!-- End Google Tag Manager (noscript) -->
 
 {{-- Header --}}
 <header class="bg-gray-900 border-b border-gray-200 shadow-sm">
@@ -347,6 +363,24 @@
         });
     }
     document.addEventListener('DOMContentLoaded', initCountdowns);
+
+    // Global Add to Cart Tracker
+    function trackAddToCartEvent(productId, productName, productPrice, qty = 1) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'add_to_cart',
+            ecommerce: {
+                currency: 'BDT',
+                value: productPrice * qty,
+                items: [{
+                    item_id: productId,
+                    item_name: productName,
+                    price: productPrice,
+                    quantity: qty
+                }]
+            }
+        });
+    }
 </script>
 
 @stack('scripts')

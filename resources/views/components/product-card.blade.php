@@ -44,7 +44,7 @@
         {{-- Action Buttons --}}
         <div class="flex gap-2 mt-3">
             {{-- Add to Cart --}}
-            <form action="{{ route('cart.add') }}" method="POST" class="flex-1">
+            <form action="{{ route('cart.add') }}" method="POST" class="flex-1" onsubmit="trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->effective_price }}, 1)">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <input type="hidden" name="size" value="{{ ($product->sizes[0]['size'] ?? 'M') }}">
@@ -58,6 +58,7 @@
 
             {{-- Order Now --}}
             <a href="{{ route('checkout.order-now', ['product_id' => $product->id, 'size' => ($product->sizes[0]['size'] ?? 'M'), 'color' => ($product->colors[0] ?? ''), 'qty' => 1]) }}"
+               onclick="trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->effective_price }}, 1)"
                class="flex-1 text-xs font-medium px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-center transition-colors duration-200">
                 এখনই অর্ডার
             </a>

@@ -157,7 +157,7 @@
             {{-- Action Buttons --}}
             <div class="flex gap-3">
                 {{-- Add to Cart --}}
-                <form action="{{ route('cart.add') }}" method="POST" class="flex-1">
+                <form action="{{ route('cart.add') }}" method="POST" class="flex-1" onsubmit="trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }}, qty)">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <input type="hidden" name="size" :value="selectedSize">
@@ -175,7 +175,7 @@
                 <a :href="selectedSize ? '{{ route('checkout.order-now') }}?product_id={{ $product->id }}&size=' + selectedSize + '&color=' + selectedColor + '&qty=' + qty : 'javascript:void(0)'"
                    :class="(!selectedSize && sizes.length > 0) ? 'opacity-50 cursor-not-allowed bg-amber-400' : 'hover:bg-amber-600'"
                    class="flex-1 py-3 px-6 rounded-xl bg-amber-500 text-white font-semibold text-center transition-all duration-200 shadow-md hover:shadow-lg"
-                   @click="if(!selectedSize && sizes.length > 0) { $el.preventDefault(); }">
+                   @click="if(!selectedSize && sizes.length > 0) { $el.preventDefault(); } else { trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }}, qty); }">
                     ⚡ এখনই অর্ডার করুন
                 </a>
             </div>

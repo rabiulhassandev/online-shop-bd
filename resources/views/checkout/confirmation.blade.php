@@ -69,3 +69,36 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    const transactionId = '{{ $order->order_number }}';
+    const trackedOrders = JSON.parse(localStorage.getItem('tracked_purchases') || '[]');
+
+    if (!trackedOrders.includes(transactionId)) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'purchase',
+            ecommerce: {
+                transaction_id: transactionId,
+                value: {{ $order->total }},
+                currency: 'BDT',
+                items: [
+                    @foreach($order->items as $item)
+                    {
+                        item_id: '{{ $item["product_id"] }}',
+                        item_name: '{!! addslashes($item["product_name"]) !!}',
+                        price: {{ $item["price"] ?? ($item["line_total"] / $item["qty"]) }},
+                        quantity: {{ $item["qty"] }}
+                    }@if(!$loop->last),@endif
+                    @endforeach
+                ]
+            }
+        });
+
+        // Mark this order as tracked
+        trackedOrders.push(transactionId);
+        localStorage.setItem('tracked_purchases', JSON.stringify(trackedOrders));
+    }
+</script>
+@endpush
