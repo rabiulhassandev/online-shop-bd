@@ -157,7 +157,7 @@
             {{-- Action Buttons --}}
             <div class="flex gap-3">
                 {{-- Add to Cart --}}
-                <form action="{{ route('cart.add') }}" method="POST" class="flex-1" onsubmit="trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }}, qty)">
+                <form action="{{ route('cart.add') }}" method="POST" class="flex-1" @submit="trackAddToCartEvent('{{ $product->id }}', '{{ addslashes($product->name) }}', {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }}, qty)">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <input type="hidden" name="size" :value="selectedSize">
@@ -283,3 +283,31 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // View Item Tracking
+    const productId = '{{ $product->id }}';
+    const viewedProducts = JSON.parse(sessionStorage.getItem('tracked_views') || '[]');
+
+    if (!viewedProducts.includes(productId)) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'view_item',
+            ecommerce: {
+                currency: 'BDT',
+                value: {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }},
+                items: [{
+                    item_id: productId,
+                    item_name: '{!! addslashes($product->name) !!}',
+                    price: {{ $product->hasActiveDiscount() ? $product->effective_price : $product->price }}
+                }]
+            }
+        });
+
+        // Save view to session storage so we don't track refresh
+        viewedProducts.push(productId);
+        sessionStorage.setItem('tracked_views', JSON.stringify(viewedProducts));
+    }
+</script>
+@endpush

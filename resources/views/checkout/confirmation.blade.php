@@ -83,6 +83,11 @@
                 transaction_id: transactionId,
                 value: {{ $order->total }},
                 currency: 'BDT',
+                customer: {
+                    name: '{!! addslashes($order->customer_name) !!}',
+                    phone: '{!! addslashes($order->phone) !!}',
+                    country: 'Bangladesh'
+                },
                 items: [
                     @foreach($order->items as $item)
                     {
