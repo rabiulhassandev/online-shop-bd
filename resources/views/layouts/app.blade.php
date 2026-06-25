@@ -69,8 +69,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
                     @else
                         <div>
-                            <div class="text-2xl font-bold tracking-tight text-white">Men's <span class="text-amber-500">Signature</span></div>
-                            <div class="text-xs text-white">Your Style, Your Signature</div>
+                            <div class="text-2xl font-bold tracking-tight text-white">Kidzo <span class="text-amber-500">BD</span></div>
+                            <div class="text-xs text-white">a premium toy shop</div>
                         </div>
                     @endif
                 </a>
@@ -255,7 +255,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             {{-- Brand --}}
             <div>
                 @if(\App\Models\Setting::get('site_logo') != 0)
-                    <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-12">
+                    <img src="{{ asset('storage/' . \App\Models\Setting::get('site_logo')) }}" alt="কাতুয়া শার্ট" class="h-20">
                 @else
                 <h3 class="text-white text-xl font-bold mb-3">Men's <span class="text-amber-400">Signature</span></h3>
                 @endif
