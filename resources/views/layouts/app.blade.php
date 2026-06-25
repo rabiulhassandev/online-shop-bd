@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', 'Mens Signature — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।')">
-    <meta name="keywords" content="@yield('meta_keywords', 'Mens Signature, পাঞ্জাবি, শার্ট, পুরুষদের শার্ট, প্রিমিয়াম শার্ট, কাতুয়া শার্ট, বাংলাদেশ, অনলাইন শার্ট শপ')">
-    <title>Men’s Signature</title>
+    @php
+        $defaultMetaTitle = \App\Models\Setting::get('meta_title') ?: \App\Models\Setting::get('site_name', 'Men\'s Signature');
+        $defaultMetaDescription = \App\Models\Setting::get('meta_description') ?: 'Mens Signature — বাংলাদেশের সেরা প্রিমিয়াম শার্ট ব্র্যান্ড। সেরা মানের শার্ট সাশ্রয়ী মূল্যে।';
+        $defaultMetaKeywords = \App\Models\Setting::get('meta_keywords') ?: 'Mens Signature, পাঞ্জাবি, শার্ট, পুরুষদের শার্ট, প্রিমিয়াম শার্ট, কাতুয়া শার্ট, বাংলাদেশ, অনলাইন শার্ট শপ';
+    @endphp
+    <meta name="description" content="{{ $__env->yieldContent('meta_description', $defaultMetaDescription) }}">
+    <meta name="keywords" content="{{ $__env->yieldContent('meta_keywords', $defaultMetaKeywords) }}">
+    <title>{{ $__env->yieldContent('title', $defaultMetaTitle) }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}">
     <link rel="shortcut icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}" type="image/x-icon">
 

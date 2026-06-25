@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেইনটেন্যান্স | কাতুয়া শার্ট</title>
+    <meta name="description" content="Men's Signature ওয়েবসাইট আপডেট চলছে। উন্নত শপিং অভিজ্ঞতার জন্য আমরা সাময়িকভাবে রক্ষণাবেক্ষণ করছি।">
+    <meta name="robots" content="noindex, nofollow">
+    <title>সাইট আপডেট চলছে | Men's Signature</title>
     @vite(['resources/css/app.css'])
 </head>
 <body class="min-h-screen bg-gray-900 flex items-center justify-center px-4">

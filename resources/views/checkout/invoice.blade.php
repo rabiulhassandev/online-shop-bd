@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Men's Signature অর্ডার ইনভয়েস ও পেমেন্ট বিবরণ।">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Invoice - {{ $order->order_number }}</title>
+    <title>Invoice {{ $order->order_number }} | Men's Signature</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}">
     <link rel="shortcut icon" href="{{ asset('storage/' . \App\Models\Setting::get('site_favicon')) }}" type="image/x-icon">
     <style>

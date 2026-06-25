@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'শপিং কার্ট')
+@section('title', 'শপিং কার্ট | Men\'s Signature')
+@section('meta_description', 'আপনার নির্বাচিত প্রিমিয়াম শার্টগুলো কার্টে দেখুন, পরিমাণ আপডেট করুন এবং দ্রুত চেকআউটের মাধ্যমে অর্ডার সম্পন্ন করুন।')
+@section('meta_keywords', 'শপিং কার্ট, শার্ট অর্ডার, অনলাইন শপিং, প্রিমিয়াম শার্ট, Men\'s Signature')
 
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

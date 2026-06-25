@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'হোম')
-@section('meta_description', 'কাতুয়া শার্ট — বাংলাদেশের প্রিমিয়াম শার্ট ব্র্যান্ড। নতুন কালেকশন, বিশেষ ছাড়, দ্রুত ডেলিভারি।')
-
 @section('content')
 
     {{-- Hero Slider --}}

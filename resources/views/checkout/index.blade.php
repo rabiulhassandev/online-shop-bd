@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'চেকআউট')
+@section('title', 'নিরাপদ চেকআউট | Men\'s Signature')
+@section('meta_description', 'Men\'s Signature-এ পছন্দের শার্ট অর্ডার করতে নিরাপদ চেকআউট সম্পন্ন করুন। ডেলিভারি ঠিকানা, পেমেন্ট পদ্ধতি ও অর্ডার তথ্য নিশ্চিত করুন।')
+@section('meta_keywords', 'চেকআউট, শার্ট অর্ডার, অনলাইন পেমেন্ট, ক্যাশ অন ডেলিভারি, Men\'s Signature')
 
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

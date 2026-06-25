@@ -50,6 +50,27 @@
             </div>
         </div>
 
+        {{-- Meta Data --}}
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
+            <h3 class="font-semibold text-gray-900 mb-4">Meta Data</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                    <input type="text" name="meta_title" value="{{ $settings->get('meta_title') }}"
+                           class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                           placeholder="Example: Men's Signature">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+                    <textarea name="meta_description" rows="3" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" placeholder="Short description for search engines">{{ $settings->get('meta_description') }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Meta Keywords</label>
+                    <textarea name="meta_keywords" rows="2" class="w-full border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" placeholder="Example: shirts, premium shirts, online shop">{{ $settings->get('meta_keywords') }}</textarea>
+                </div>
+            </div>
+        </div>
+
         {{-- Contact Info --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-5">
             <h3 class="font-semibold text-gray-900 mb-4">যোগাযোগ তথ্য</h3>

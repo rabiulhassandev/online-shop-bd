@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('title', $product->name)
-@section('meta_description', Str::limit($product->description, 160))
+@section('meta_description', Str::limit(strip_tags($product->description ?: $product->name), 155))
+@section('meta_keywords', $product->name.', '.($product->category?->name ? $product->category->name.', ' : '').'খেলনা, প্রিমিয়াম খেলনা, Kidzo, বাংলাদেশ, অনলাইন খেলনা শপ')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

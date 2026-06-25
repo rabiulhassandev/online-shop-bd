@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'শর্তাবলী')
-@section('meta_description', 'আমাদের শর্তাবলী পড়ুন')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

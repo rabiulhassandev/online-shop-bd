@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'অর্ডার নিশ্চিত')
+@section('title', 'অর্ডার নিশ্চিত হয়েছে | Men\'s Signature')
+@section('meta_description', 'আপনার Men\'s Signature অর্ডার সফলভাবে গ্রহণ করা হয়েছে। অর্ডার নম্বর, ডেলিভারি তথ্য ও পরবর্তী ধাপ এখানে দেখুন।')
+@section('meta_keywords', 'অর্ডার নিশ্চিত, শার্ট অর্ডার, ডেলিভারি তথ্য, Men\'s Signature')
 
 @section('content')
 <div class="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
